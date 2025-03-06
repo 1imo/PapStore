@@ -64,8 +64,20 @@ export function Services() {
     );
   }
 
+  // Fixed bento layout matching the provided design
+  const getBentoGridClass = (index) => {
+    // Based on the screenshot with 4 services
+    if (index === 0) return 'col-span-12 md:col-span-6 row-span-2'; // Left big card
+    if (index === 1) return 'col-span-12 md:col-span-6 row-span-1'; // Top right card
+    if (index === 2) return 'col-span-12 md:col-span-3 row-span-1'; // Bottom right small card
+    if (index === 3) return 'col-span-12 md:col-span-3 row-span-1'; // Bottom right small card
+    
+    // For any additional services beyond the first 4
+    return 'col-span-12 md:col-span-3 row-span-1';
+  };
+
   return (
-    <section id="services" className="py-12 bg-gray-50">
+    <section id="services" className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -76,52 +88,130 @@ export function Services() {
           </p>
         </div>
 
-        <div className={`mt-12 grid gap-6 sm:gap-8 ${
-          services.length === 1 ? 'max-w-lg mx-auto' : 
-          services.length === 2 ? 'grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto' :
-          services.length === 3 ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3' :
-          'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-        }`}>
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className="group bg-white overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-300"
-            >
-              {service.imageUrl && (
-                <div className="relative h-64 sm:h-72">
-                  <Image
-                    src={service.imageUrl}
-                    alt={service.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                </div>
-              )}
-              <div className="p-6 sm:p-8 bg-white">
-                <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3">
-                  {service.name}
-                </h3>
-                <p className="text-base text-gray-600 mb-6">
-                  {service.description}
-                </p>
-                <a
-                  href="#inquiry"
-                  className="inline-flex items-center justify-center w-full px-6 py-3 text-base font-medium rounded-xl text-white bg-gray-900 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200"
-                  onClick={() => {
-                    logError('Service inquiry click', {
-                      serviceId: service.id,
-                      serviceName: service.name,
-                    });
-                  }}
-                >
-                  Get Quote
-                </a>
+        <div className="mt-12 grid grid-cols-12 gap-4 md:gap-6 max-w-7xl mx-auto">
+          {services.map((service, index) => {
+            const gridClass = getBentoGridClass(index);
+            const isLarge = gridClass.includes('row-span-2');
+            
+            // Determine the card style based on index for variety
+            const getCardStyle = (index) => {
+              const styles = [
+                // Featured card with full background image (left tall card)
+                {
+                  imagePosition: 'full',
+                  titlePosition: 'overlay',
+                  imageHeight: 'h-full',
+                  textAlignment: 'text-left',
+                  bgColor: 'bg-transparent',
+                },
+                // Top right card
+                {
+                  imagePosition: 'none',
+                  titlePosition: 'top',
+                  imageHeight: 'h-0',
+                  textAlignment: 'text-left',
+                  bgColor: 'bg-white',
+                },
+                // Bottom right first small card
+                {
+                  imagePosition: 'none',
+                  titlePosition: 'top',
+                  imageHeight: 'h-0',
+                  textAlignment: 'text-left',
+                  bgColor: 'bg-white',
+                },
+                // Bottom right second small card (with image)
+                {
+                  imagePosition: 'full',
+                  titlePosition: 'overlay',
+                  imageHeight: 'h-full',
+                  textAlignment: 'text-left',
+                  bgColor: 'bg-transparent',
+                }
+              ];
+              return styles[index % styles.length];
+            };
+            
+            const cardStyle = getCardStyle(index);
+            const showImage = cardStyle.imagePosition !== 'none' && service.imageUrl;
+            const isFullImageCard = cardStyle.imagePosition === 'full';
+            const isImageOverlay = cardStyle.titlePosition === 'overlay';
+            
+            return (
+              <div
+                key={service.id}
+                className={`group overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col ${gridClass} ${cardStyle.bgColor}`}
+              >
+                {showImage && (
+                  <div className={`relative ${isFullImageCard ? 'h-full w-full' : `${cardStyle.imageHeight} w-full`} overflow-hidden`}>
+                    <Image
+                      src={service.imageUrl || "/placeholder.jpg"}
+                      alt={service.name}
+                      fill
+                      className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                    
+                    {isImageOverlay && (
+                      <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full flex flex-col justify-end h-full">
+                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                          {service.name}
+                        </h3>
+                        {isLarge && (
+                          <p className="text-white/90 text-base max-w-md">
+                            {service.description}
+                          </p>
+                        )}
+                        <div className="mt-4">
+                          <a
+                            href="#inquiry"
+                            className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-gray-900/80 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
+                            onClick={() => {
+                              logError('Service inquiry click', {
+                                serviceId: service.id,
+                                serviceName: service.name,
+                              });
+                            }}
+                          >
+                            Get Quote
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {(!showImage || !isImageOverlay) && (
+                  <div className="p-6 md:p-8 h-full flex flex-col justify-between">
+                    <div>
+                      <h3 className={`${isLarge ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'} font-bold text-gray-900 mb-4`}>
+                        {service.name}
+                      </h3>
+                      <p className={`${isLarge ? 'text-base' : 'text-sm'} text-gray-600`}>
+                        {service.description}
+                      </p>
+                    </div>
+                    <div className="mt-4">
+                      <a
+                        href="#inquiry"
+                        className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-gray-900 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
+                        onClick={() => {
+                          logError('Service inquiry click', {
+                            serviceId: service.id,
+                            serviceName: service.name,
+                          });
+                        }}
+                      >
+                        Get Quote
+                      </a>
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
   );
-} 
+}

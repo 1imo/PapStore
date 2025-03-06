@@ -18,6 +18,23 @@ export async function POST(request: Request) {
             },
         });
 
+        if (data.marketing) {
+            try {
+                await prisma.subscriber.create({
+                    data: {
+                        email: data.email,
+                        name: data.name,
+                        active: true
+                    },
+                });
+                await logInfo('New subscriber added from inquiry', { email: data.email });
+            } catch (error) {
+                if (!(error instanceof Error && error.message.includes('Unique constraint'))) {
+                    throw error;
+                }
+            }
+        }
+
         await logInfo('New inquiry created', { inquiryId: inquiry.id });
 
         return NextResponse.json({ inquiry });
