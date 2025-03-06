@@ -187,7 +187,9 @@ export function Services() {
                           <a
                             href="#inquiry"
                             className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 text-sm font-medium rounded-lg sm:rounded-xl text-white bg-gray-900/80 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.preventDefault();
+                              document.querySelector('#inquiry')?.scrollIntoView({ behavior: 'smooth' });
                               logError('Service inquiry click', {
                                 serviceId: service.id,
                                 serviceName: service.name,
@@ -219,7 +221,9 @@ export function Services() {
                       <a
                         href="#inquiry"
                         className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 text-sm font-medium rounded-lg sm:rounded-xl text-white bg-gray-900 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault();
+                          document.querySelector('#inquiry')?.scrollIntoView({ behavior: 'smooth' });
                           logError('Service inquiry click', {
                             serviceId: service.id,
                             serviceName: service.name,

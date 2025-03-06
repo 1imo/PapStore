@@ -54,13 +54,13 @@ export function EmailBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 pb-2 sm:pb-5 z-50">
+    <div className="fixed bottom-0 inset-x-0 pb-2 sm:pb-5 z-60">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="p-2 rounded-lg bg-gray-900 shadow-lg sm:p-3">
           <div className="flex items-center justify-between flex-wrap">
             {status !== 'success' ? (
               <>
-                <div className="w-0 flex-1 flex items-center min-w-0">
+                <div className="w-full sm:w-0 sm:flex-1 flex items-center min-w-0 mb-2 sm:mb-0">
                   <span className="flex p-2 rounded-lg bg-gray-800">
                     <svg 
                       className="h-6 w-6 text-white" 
@@ -77,18 +77,17 @@ export function EmailBanner() {
                     </svg>
                   </span>
                   <p className="ml-3 font-medium text-white truncate">
-                    <span className="md:hidden">10% off your first job!</span>
-                    <span className="hidden md:inline">Get 10% off your first job when you subscribe to our newsletter.</span>
+                    <span>10% off your first job!</span>
                   </p>
                 </div>
-                <form onSubmit={handleSubmit} className="flex-shrink-0 w-full sm:w-auto mt-2 sm:mt-0 sm:ml-3">
+                <form onSubmit={handleSubmit} className="flex-shrink-0 w-full sm:w-auto">
                   <div className="flex items-center justify-between">
                     <input
                       type="email"
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="min-w-0 w-full sm:w-64 px-4 py-2 text-base rounded-lg border-2 border-transparent focus:border-white bg-gray-800 text-white placeholder-gray-400 focus:outline-none"
+                      className="min-w-0 flex-1 w-full px-4 py-2 text-base rounded-lg border-2 border-transparent focus:border-white bg-gray-800 text-white placeholder-gray-400 focus:outline-none"
                       required
                     />
                     <button
@@ -113,8 +112,8 @@ export function EmailBanner() {
                 </form>
               </>
             ) : (
-              <div className="w-full flex items-center justify-between">
-                <div className="flex items-center">
+              <div className="w-full flex items-center justify-between p-2">
+                <div className="flex items-center flex-1">
                   <span className="flex p-2 rounded-lg bg-green-800">
                     <svg 
                       className="h-6 w-6 text-white" 
@@ -130,7 +129,7 @@ export function EmailBanner() {
                       />
                     </svg>
                   </span>
-                  <p className="ml-3 font-medium text-white">
+                  <p className="ml-3 font-medium text-white text-sm sm:text-base">
                     Thanks for subscribing! Your discount code will be emailed shortly.
                   </p>
                 </div>

@@ -15,11 +15,19 @@ const navigation = [
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleNavClick = async (itemName: string) => {
+  const handleNavClick = async (itemName: string, href: string) => {
     await logInfo('Navigation item clicked', {
       item: itemName,
       source: 'header'
     });
+
+    // Add smooth scrolling for anchor links
+    if (href.startsWith('#')) {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   };
 
   return (
@@ -39,7 +47,7 @@ export function Header() {
                 key={item.name}
                 href={item.href}
                 className="text-base font-medium text-gray-600 hover:text-gray-900 transition-colors"
-                onClick={() => handleNavClick(item.name)}
+                onClick={() => handleNavClick(item.name, item.href)}
               >
                 {item.name}
               </Link>
@@ -47,7 +55,7 @@ export function Header() {
             <a
               href="#inquiry"
               className="inline-flex items-center justify-center px-6 py-2 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-gray-900 hover:bg-gray-800 transition-colors"
-              onClick={() => handleNavClick('Get Quote')}
+              onClick={() => handleNavClick('Get Quote', '#inquiry')}
             >
               Get Quote
             </a>
@@ -78,7 +86,7 @@ export function Header() {
                   href={item.href}
                   className="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                   onClick={() => {
-                    handleNavClick(item.name);
+                    handleNavClick(item.name, item.href);
                     setMobileMenuOpen(false);
                   }}
                 >
@@ -89,7 +97,7 @@ export function Header() {
                 href="#inquiry"
                 className="block rounded-lg px-3 py-2 text-base font-medium text-white bg-gray-900 hover:bg-gray-800 mt-2"
                 onClick={() => {
-                  handleNavClick('Get Quote');
+                  handleNavClick('Get Quote', '#inquiry');
                   setMobileMenuOpen(false);
                 }}
               >

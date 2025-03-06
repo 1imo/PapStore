@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 
 export function Hero() {
@@ -18,12 +20,20 @@ export function Hero() {
             <Link
               href="#inquiry"
               className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-xl text-white bg-gray-900 hover:bg-gray-800 transition-all duration-200 shadow-md hover:shadow-lg"
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#inquiry')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               Get a Free Quote
             </Link>
             <Link
               href="#services"
               className="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-900 text-lg font-semibold rounded-xl text-gray-900 bg-white hover:bg-gray-50 transition-all duration-200 shadow-md hover:shadow-lg"
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
               View Our Services
             </Link>

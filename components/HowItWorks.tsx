@@ -1,3 +1,5 @@
+'use client';
+
 import { 
   PhoneIcon, 
   UserIcon as RulerIcon, 
@@ -80,6 +82,10 @@ export function HowItWorks() {
           <a
             href="#inquiry"
             className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200 shadow-md hover:shadow-lg"
+            onClick={(e) => {
+              e.preventDefault();
+              document.querySelector('#inquiry')?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
             Start Your Project
           </a>
