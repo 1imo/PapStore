@@ -20,21 +20,25 @@ export default function InquiriesPage() {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    loadInquiries().then(() => {
-      // Expand first row by default
-      if (inquiries.length > 0) {
-        setExpandedId(inquiries[0].id);
-      }
-    });
-  }, [inquiries.length]);
+    loadInquiries(currentPage);
+  }, [currentPage]);
 
-  async function loadInquiries() {
+  async function loadInquiries(page: number) {
     try {
-      const response = await fetch('/api/admin/inquiries');
+      const response = await fetch(`/api/admin/inquiries?page=${page}&limit=${itemsPerPage}`);
       const data = await response.json();
       setInquiries(data.inquiries);
+      setTotalPages(Math.ceil(data.total / itemsPerPage));
+      
+      // Expand first row by default
+      if (data.inquiries.length > 0) {
+        setExpandedId(data.inquiries[0].id);
+      }
     } catch (error) {
       await logError('Failed to load inquiries', { error });
     } finally {
@@ -55,7 +59,7 @@ export default function InquiriesPage() {
       if (!response.ok) throw new Error('Failed to update inquiry');
 
       await logInfo('Inquiry marked as responded', { inquiryId: id });
-      loadInquiries();
+      loadInquiries(currentPage);
       setExpandedId(null);
     } catch (error) {
       await logError('Failed to mark inquiry as responded', { error });
@@ -86,91 +90,133 @@ export default function InquiriesPage() {
       </div>
       
       <div className="mt-8">
-        <div className="overflow-x-auto scrollbar-hide max-w-[100vw]" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
-          <div className="inline-block min-w-full align-middle">
-            <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
-              <table className="min-w-full divide-y divide-gray-300">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Date
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Name
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Contact
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Service
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Message
-                    </th>
-                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                      Status
-                    </th>
-                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">Actions</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200 bg-white">
-                  {inquiries.map((inquiry) => (
-                    <tr 
-                      key={inquiry.id}
-                      onClick={() => setExpandedId(expandedId === inquiry.id ? null : inquiry.id)}
-                      className={`cursor-pointer transition-colors ${
-                        expandedId === inquiry.id ? 'bg-gray-50' : 'hover:bg-gray-50'
-                      }`}
-                    >
-                      <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {new Date(inquiry.createdAt).toLocaleString()}
-                      </td>
-                      <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                        {inquiry.name}
-                      </td>
-                      <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <div>{inquiry.email}</div>
-                        <div>{inquiry.phone}</div>
-                      </td>
-                      <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        {inquiry.service || 'Not specified'}
-                      </td>
-                      <td className={`align-top px-3 py-4 text-sm text-gray-500 ${
-                        expandedId === inquiry.id ? 'whitespace-pre-wrap' : 'truncate max-w-xs'
-                      }`}>
-                        {inquiry.message}
-                      </td>
-                      <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                          inquiry.responded 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-yellow-100 text-yellow-800'
-                        }`}>
-                          {inquiry.responded ? 'Responded' : 'Pending'}
-                        </span>
-                      </td>
-                      <td className="align-top whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        {!inquiry.responded && (
-                          <div className="pt-1">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                markAsResponded(inquiry.id);
-                              }}
-                              className="text-gray-900 hover:text-gray-700 transition-colors duration-200"
-                            >
-                              Mark as Responded
-                            </button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+        <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
+          <table className="min-w-full divide-y divide-gray-300">
+            <thead className="bg-gray-50">
+              <tr>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Date
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Name
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Contact
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Service
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Message
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Status
+                </th>
+                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {inquiries.map((inquiry) => (
+                <tr 
+                  key={inquiry.id}
+                  onClick={() => setExpandedId(expandedId === inquiry.id ? null : inquiry.id)}
+                  className={`cursor-pointer transition-colors ${
+                    expandedId === inquiry.id ? 'bg-gray-50' : 'hover:bg-gray-50'
+                  }`}
+                >
+                  <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {new Date(inquiry.createdAt).toLocaleString()}
+                  </td>
+                  <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                    {inquiry.name}
+                  </td>
+                  <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <div>{inquiry.email}</div>
+                    <div>{inquiry.phone}</div>
+                  </td>
+                  <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {inquiry.service || 'Not specified'}
+                  </td>
+                  <td className={`align-top px-3 py-4 text-sm text-gray-500 ${
+                    expandedId === inquiry.id ? 'whitespace-pre-wrap' : 'truncate max-w-xs'
+                  }`}>
+                    {inquiry.message}
+                  </td>
+                  <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                      inquiry.responded 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {inquiry.responded ? 'Responded' : 'Pending'}
+                    </span>
+                  </td>
+                  <td className="align-top whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    {!inquiry.responded && (
+                      <div className="pt-1">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            markAsResponded(inquiry.id);
+                          }}
+                          className="text-gray-900 hover:text-gray-700 transition-colors duration-200"
+                        >
+                          Mark as Responded
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        
+        {/* Replace the existing pagination controls with: */}
+        <div className="mt-4 flex justify-center">
+          <div className="flex items-center gap-4 text-sm text-gray-900">
+            {currentPage > 2 && (
+              <button
+                onClick={() => setCurrentPage(currentPage - 2)}
+              >
+                {currentPage - 2}
+              </button>
+            )}
+
+            {currentPage > 1 && (
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
+                {currentPage - 1}
+              </button>
+            )}
+
+            <button
+              onClick={() => setCurrentPage(currentPage)}
+              className="disabled:opacity-50"
+            >
+              {currentPage}
+            </button>
+
+            {currentPage < totalPages && (
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
+                {currentPage + 1}
+              </button>
+            )}
+
+            {currentPage + 1 < totalPages && (
+              <>
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

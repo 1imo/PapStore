@@ -2,15 +2,27 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { logInfo, logError } from '@/lib/LoggingService';
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
-        const services = await prisma.service.findMany({
-            orderBy: { order: 'asc' },
-        });
+        const { searchParams } = new URL(request.url);
+        const page = parseInt(searchParams.get('page') || '1');
+        const limit = parseInt(searchParams.get('limit') || '10');
+        const skip = (page - 1) * limit;
+
+        const [services, total] = await Promise.all([
+            prisma.service.findMany({
+                orderBy: {
+                    order: 'asc',
+                },
+                skip,
+                take: limit,
+            }),
+            prisma.service.count(),
+        ]);
 
         await logInfo('Services fetched');
 
-        return NextResponse.json({ services });
+        return NextResponse.json({ services, total });
     } catch (error) {
         await logError('Failed to fetch services', { error });
         return NextResponse.json(

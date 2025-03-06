@@ -15,6 +15,9 @@ interface Log {
 export default function LogsPage() {
   const [logs, setLogs] = useState<Log[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
   const [filter, setFilter] = useState({
     level: '',
     source: '',
@@ -22,17 +25,20 @@ export default function LogsPage() {
 
   useEffect(() => {
     loadLogs();
-  }, [filter]);
+  }, [currentPage]);
 
   async function loadLogs() {
     try {
       const params = new URLSearchParams();
+      params.append('page', currentPage.toString());
+      params.append('limit', itemsPerPage.toString());
       if (filter.level) params.append('level', filter.level);
       if (filter.source) params.append('source', filter.source);
 
       const response = await fetch(`/api/admin/logs?${params}`);
       const data = await response.json();
       setLogs(data.logs);
+      setTotalPages(Math.ceil(data.total / itemsPerPage));
     } catch (error) {
       await logError('Failed to load logs', { error });
     } finally {
@@ -210,6 +216,52 @@ export default function LogsPage() {
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-4 flex justify-center">
+          <div className="flex items-center gap-4 text-sm text-gray-900">
+            {currentPage > 2 && (
+              <button
+                onClick={() => setCurrentPage(currentPage - 2)}
+              >
+                {currentPage - 2}
+              </button>
+            )}
+
+            {currentPage > 1 && (
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
+                {currentPage - 1}
+              </button>
+            )}
+
+            <button
+              onClick={() => setCurrentPage(currentPage)}
+              className="disabled:opacity-50"
+            >
+              {currentPage}
+            </button>
+
+            {currentPage < totalPages && (
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
+                {currentPage + 1}
+              </button>
+            )}
+
+            {currentPage + 1 < totalPages && (
+              <>
+                <span>...</span>
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

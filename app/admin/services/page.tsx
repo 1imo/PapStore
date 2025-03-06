@@ -17,6 +17,9 @@ export default function ServicesPage() {
   const [loading, setLoading] = useState(true);
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
 
   const emptyService: Omit<Service, 'id'> = {
     name: '',
@@ -27,18 +30,23 @@ export default function ServicesPage() {
   };
 
   useEffect(() => {
-    loadServices().then(() => {
-      if (services.length > 0) {
-        setExpandedId(services[0].id);
-      }
-    });
-  }, [services.length]);
+    loadServices();
+  }, [currentPage]);
 
   async function loadServices() {
     try {
-      const response = await fetch('/api/admin/services');
+      const params = new URLSearchParams();
+      params.append('page', currentPage.toString());
+      params.append('limit', itemsPerPage.toString());
+
+      const response = await fetch(`/api/admin/services?${params}`);
       const data = await response.json();
       setServices(data.services);
+      setTotalPages(Math.ceil(data.total / itemsPerPage));
+      
+      if (data.services.length > 0) {
+        setExpandedId(data.services[0].id);
+      }
     } catch (error) {
       await logError('Failed to load services', { error });
     } finally {
@@ -271,6 +279,52 @@ export default function ServicesPage() {
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-4 flex justify-center">
+          <div className="flex items-center gap-4 text-sm text-gray-900">
+            {currentPage > 2 && (
+              <button
+                onClick={() => setCurrentPage(currentPage - 2)}
+              >
+                {currentPage - 2}
+              </button>
+            )}
+
+            {currentPage > 1 && (
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
+                {currentPage - 1}
+              </button>
+            )}
+
+            <button
+              onClick={() => setCurrentPage(currentPage)}
+              className="disabled:opacity-50"
+            >
+              {currentPage}
+            </button>
+
+            {currentPage < totalPages && (
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
+                {currentPage + 1}
+              </button>
+            )}
+
+            {currentPage + 1 < totalPages && (
+              <>
+                <span>...</span>
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

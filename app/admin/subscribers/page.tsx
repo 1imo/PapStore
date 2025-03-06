@@ -15,16 +15,24 @@ export default function SubscribersPage() {
   const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     loadSubscribers();
-  }, []);
+  }, [currentPage]);
 
   async function loadSubscribers() {
     try {
-      const response = await fetch('/api/admin/subscribers');
+      const params = new URLSearchParams();
+      params.append('page', currentPage.toString());
+      params.append('limit', itemsPerPage.toString());
+
+      const response = await fetch(`/api/admin/subscribers?${params}`);
       const data = await response.json();
       setSubscribers(data.subscribers);
+      setTotalPages(Math.ceil(data.total / itemsPerPage));
     } catch (error) {
       await logError('Failed to load subscribers', { error });
     } finally {
@@ -179,6 +187,52 @@ export default function SubscribersPage() {
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-4 flex justify-center">
+          <div className="flex items-center gap-4 text-sm text-gray-900">
+            {currentPage > 2 && (
+              <button
+                onClick={() => setCurrentPage(currentPage - 2)}
+              >
+                {currentPage - 2}
+              </button>
+            )}
+
+            {currentPage > 1 && (
+              <button
+                onClick={() => setCurrentPage(currentPage - 1)}
+              >
+                {currentPage - 1}
+              </button>
+            )}
+
+            <button
+              onClick={() => setCurrentPage(currentPage)}
+              className="disabled:opacity-50"
+            >
+              {currentPage}
+            </button>
+
+            {currentPage < totalPages && (
+              <button
+                onClick={() => setCurrentPage(currentPage + 1)}
+              >
+                {currentPage + 1}
+              </button>
+            )}
+
+            {currentPage + 1 < totalPages && (
+              <>
+                <span>...</span>
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                >
+                  {totalPages}
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
