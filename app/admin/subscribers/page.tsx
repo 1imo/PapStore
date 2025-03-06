@@ -119,63 +119,67 @@ export default function SubscribersPage() {
       </div>
 
       <div className="mt-8">
-        <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
-          <table className="min-w-full divide-y divide-gray-300">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Email
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Name
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Joined Date
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Status
-                </th>
-                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span className="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {subscribers.map((subscriber) => (
-                <tr 
-                  key={subscriber.id}
-                  className="hover:bg-gray-50 transition-colors"
-                >
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                    {subscriber.email}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {subscriber.name || '-'}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {new Date(subscriber.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                      subscriber.active 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {subscriber.active ? 'Active' : 'Inactive'}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <button
-                      onClick={() => toggleSubscriberStatus(subscriber)}
-                      className="text-gray-900 hover:text-gray-700 transition-colors duration-200"
+        <div className="overflow-x-auto scrollbar-hide max-w-[100vw]" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+          <div className="inline-block min-w-full align-middle">
+            <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Email
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Name
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Joined Date
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Status
+                    </th>
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                      <span className="sr-only">Actions</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {subscribers.map((subscriber) => (
+                    <tr 
+                      key={subscriber.id}
+                      className="hover:bg-gray-50 transition-colors"
                     >
-                      {subscriber.active ? 'Deactivate' : 'Activate'}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                        {subscriber.email}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {subscriber.name || '-'}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {new Date(subscriber.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                          subscriber.active 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-red-100 text-red-800'
+                        }`}>
+                          {subscriber.active ? 'Active' : 'Inactive'}
+                        </span>
+                      </td>
+                      <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <button
+                          onClick={() => toggleSubscriberStatus(subscriber)}
+                          className="text-gray-900 hover:text-gray-700 transition-colors duration-200"
+                        >
+                          {subscriber.active ? 'Deactivate' : 'Activate'}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

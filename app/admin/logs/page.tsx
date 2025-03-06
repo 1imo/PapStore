@@ -158,55 +158,59 @@ export default function LogsPage() {
       </div>
 
       <div className="mt-8">
-        <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
-          <table className="min-w-full divide-y divide-gray-300">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Timestamp
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Level
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Source
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Message
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Metadata
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {logs.map((log) => (
-                <tr key={log.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {new Date(log.createdAt).toLocaleString()}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm">
-                    <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getLevelStyles(log.level)}`}>
-                      {log.level}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {log.source}
-                  </td>
-                  <td className="px-3 py-4 text-sm text-gray-500">
-                    {log.message}
-                  </td>
-                  <td className="px-3 py-4 text-sm text-gray-500">
-                    {log.metadata && (
-                      <pre className="text-xs">
-                        {JSON.stringify(JSON.parse(log.metadata), null, 2)}
-                      </pre>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="overflow-x-auto scrollbar-hide max-w-[100vw]" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+          <div className="inline-block min-w-full align-middle">
+            <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Timestamp
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Level
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Source
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Message
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Metadata
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {logs.map((log) => (
+                    <tr key={log.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {new Date(log.createdAt).toLocaleString()}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm">
+                        <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${getLevelStyles(log.level)}`}>
+                          {log.level}
+                        </span>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {log.source}
+                      </td>
+                      <td className="px-3 py-4 text-sm text-gray-500">
+                        {log.message}
+                      </td>
+                      <td className="px-3 py-4 text-sm text-gray-500">
+                        {log.metadata && (
+                          <pre className="text-xs">
+                            {JSON.stringify(JSON.parse(log.metadata), null, 2)}
+                          </pre>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

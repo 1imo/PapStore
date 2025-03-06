@@ -60,7 +60,7 @@ export default async function AdminDashboard() {
           <div className="p-6">
             <div className="flex items-center">
               <div className="flex-shrink-0">
-                <div className="bg-primary-100 rounded-md p-3">
+                <div className="bg-blue-100 rounded-md p-3">
                   {/* Add icon here */}
                 </div>
               </div>

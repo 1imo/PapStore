@@ -192,82 +192,86 @@ export default function ServicesPage() {
       )}
 
       <div className="mt-8">
-        <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
-          <table className="min-w-full divide-y divide-gray-300">
-            <thead className="bg-gray-50">
-              <tr>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Order
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Name
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Description
-                </th>
-                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Status
-                </th>
-                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span className="sr-only">Actions</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 bg-white">
-              {services.map((service) => (
-                <tr 
-                  key={service.id}
-                  onClick={() => setExpandedId(expandedId === service.id ? null : service.id)}
-                  className={`cursor-pointer transition-colors ${
-                    expandedId === service.id ? 'bg-gray-50' : 'hover:bg-gray-50'
-                  }`}
-                >
-                  <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    {service.order}
-                  </td>
-                  <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-900">
-                    {service.name}
-                  </td>
-                  <td className={`align-top px-3 py-4 text-sm text-gray-500 ${
-                    expandedId === service.id ? 'whitespace-pre-wrap' : 'truncate max-w-xs'
-                  }`}>
-                    {service.description}
-                  </td>
-                  <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                    <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                      service.isActive 
-                        ? 'bg-green-100 text-green-800' 
-                        : 'bg-red-100 text-red-800'
-                    }`}>
-                      {service.isActive ? 'Active' : 'Inactive'}
-                    </span>
-                  </td>
-                  <td className="align-top whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                    <div className="pt-1">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setEditingService(service);
-                        }}
-                        className="text-gray-900 hover:text-gray-700 mr-4 transition-colors duration-200"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleServiceStatus(service);
-                        }}
-                        className="text-gray-900 hover:text-gray-700 transition-colors duration-200"
-                      >
-                        {service.isActive ? 'Deactivate' : 'Activate'}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="overflow-x-auto scrollbar-hide max-w-[100vw]" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
+          <div className="inline-block min-w-full align-middle">
+            <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Order
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Name
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Description
+                    </th>
+                    <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                      Status
+                    </th>
+                    <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                      <span className="sr-only">Actions</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {services.map((service) => (
+                    <tr 
+                      key={service.id}
+                      onClick={() => setExpandedId(expandedId === service.id ? null : service.id)}
+                      className={`cursor-pointer transition-colors ${
+                        expandedId === service.id ? 'bg-gray-50' : 'hover:bg-gray-50'
+                      }`}
+                    >
+                      <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        {service.order}
+                      </td>
+                      <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                        {service.name}
+                      </td>
+                      <td className={`align-top px-3 py-4 text-sm text-gray-500 ${
+                        expandedId === service.id ? 'whitespace-pre-wrap' : 'truncate max-w-xs'
+                      }`}>
+                        {service.description}
+                      </td>
+                      <td className="align-top whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                          service.isActive 
+                            ? 'bg-green-100 text-green-800' 
+                            : 'bg-red-100 text-red-800'
+                        }`}>
+                          {service.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                      </td>
+                      <td className="align-top whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                        <div className="pt-1">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setEditingService(service);
+                            }}
+                            className="text-gray-900 hover:text-gray-700 mr-4 transition-colors duration-200"
+                          >
+                            Edit
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              toggleServiceStatus(service);
+                            }}
+                            className="text-gray-900 hover:text-gray-700 transition-colors duration-200"
+                          >
+                            {service.isActive ? 'Deactivate' : 'Activate'}
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -14,24 +14,30 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <div className="flex gap-6">
+    <div className="min-h-screen bg-gray-100 max-w-[100vw] overflow-x-hidden">
+      <nav className="bg-white shadow-sm w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+          <div className="flex justify-between h-16 w-full">
+            <div className="flex w-full">
+              <div className="flex gap-6 overflow-x-auto scrollbar-hide w-full" style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}>
                 {navigation.map((item) => (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="inline-flex items-center py-2 text-sm font-medium text-gray-900 hover:text-primary-600"
+                    className="inline-flex items-center py-2 text-sm font-medium text-gray-900 hover:text-primary-600 whitespace-nowrap"
                   >
                     {item.name}
                   </Link>
                 ))}
+                <Link
+                  href="/api/admin/logout"
+                  className="md:hidden inline-flex items-center py-2 text-sm font-medium text-gray-500 hover:text-gray-900 whitespace-nowrap"
+                >
+                  Logout
+                </Link>
               </div>
             </div>
-            <div className="flex items-center">
+            <div className="hidden md:flex items-center">
               <Link
                 href="/api/admin/logout"
                 className="text-sm font-medium text-gray-500 hover:text-gray-900"
