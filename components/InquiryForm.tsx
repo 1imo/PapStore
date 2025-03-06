@@ -50,7 +50,7 @@ export function InquiryForm() {
   };
 
   return (
-    <section id="inquiry" className="py-16 bg-gray-50">
+    <section id="inquiry" className="py-16 bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -61,7 +61,7 @@ export function InquiryForm() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-base font-medium text-gray-900 mb-1">

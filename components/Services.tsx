@@ -12,10 +12,28 @@ interface Service {
   isActive: boolean;
 }
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  return isMobile;
+}
+
 export function Services() {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     loadServices();
@@ -77,18 +95,18 @@ export function Services() {
   };
 
   return (
-    <section id="services" className="py-12 bg-white">
+    <section id="services" className="py-8 sm:py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Our Services
           </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-500">
+          <p className="mt-3 sm:mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-500">
             Choose from our range of professional flooring solutions
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-12 gap-4 md:gap-6 max-w-7xl mx-auto">
+        <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-12 gap-4 md:gap-6 max-w-7xl mx-auto">
           {services.map((service, index) => {
             const gridClass = getBentoGridClass(index);
             const isLarge = gridClass.includes('row-span-2');
@@ -133,17 +151,19 @@ export function Services() {
             };
             
             const cardStyle = getCardStyle(index);
-            const showImage = cardStyle.imagePosition !== 'none' && service.imageUrl;
+            // Always show images on mobile, otherwise follow desktop logic
+            const showImage = isMobile || (cardStyle.imagePosition !== 'none' && service.imageUrl);
             const isFullImageCard = cardStyle.imagePosition === 'full';
-            const isImageOverlay = cardStyle.titlePosition === 'overlay';
+            // Always use overlay style on mobile
+            const isImageOverlay = isMobile || cardStyle.titlePosition === 'overlay';
             
             return (
               <div
                 key={service.id}
-                className={`group overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col ${gridClass} ${cardStyle.bgColor}`}
+                className={`group overflow-hidden rounded-2xl sm:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col ${gridClass} ${isMobile ? 'h-[300px]' : 'min-h-[250px] sm:min-h-0'} ${cardStyle.bgColor}`}
               >
                 {showImage && (
-                  <div className={`relative ${isFullImageCard ? 'h-full w-full' : `${cardStyle.imageHeight} w-full`} overflow-hidden`}>
+                  <div className={`relative ${isFullImageCard ? 'h-full' : 'h-full'} w-full overflow-hidden`}>
                     <Image
                       src={service.imageUrl || "/placeholder.jpg"}
                       alt={service.name}
@@ -153,19 +173,20 @@ export function Services() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                     
                     {isImageOverlay && (
-                      <div className="absolute bottom-0 left-0 p-6 md:p-8 w-full flex flex-col justify-end h-full">
-                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                      <div className="absolute bottom-0 left-0 p-4 sm:p-6 md:p-8 w-full flex flex-col justify-end h-full">
+                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
                           {service.name}
                         </h3>
-                        {isLarge && (
-                          <p className="text-white/90 text-base max-w-md">
+                        {/* Only show description on desktop and if it's a large card */}
+                        {!isMobile && isLarge && (
+                          <p className="text-white/90 text-sm sm:text-base max-w-md">
                             {service.description}
                           </p>
                         )}
-                        <div className="mt-4">
+                        <div className="mt-3 sm:mt-4">
                           <a
                             href="#inquiry"
-                            className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-gray-900/80 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
+                            className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 text-sm font-medium rounded-lg sm:rounded-xl text-white bg-gray-900/80 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
                             onClick={() => {
                               logError('Service inquiry click', {
                                 serviceId: service.id,
@@ -182,19 +203,22 @@ export function Services() {
                 )}
                 
                 {(!showImage || !isImageOverlay) && (
-                  <div className="p-6 md:p-8 h-full flex flex-col justify-between">
+                  <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between">
                     <div>
-                      <h3 className={`${isLarge ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'} font-bold text-gray-900 mb-4`}>
+                      <h3 className={`${isLarge ? 'text-xl sm:text-2xl md:text-3xl' : 'text-lg sm:text-xl md:text-2xl'} font-bold text-gray-900 mb-3 sm:mb-4`}>
                         {service.name}
                       </h3>
-                      <p className={`${isLarge ? 'text-base' : 'text-sm'} text-gray-600`}>
-                        {service.description}
-                      </p>
+                      {/* Only show description on desktop */}
+                      {!isMobile && (
+                        <p className={`${isLarge ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'} text-gray-600`}>
+                          {service.description}
+                        </p>
+                      )}
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-3 sm:mt-4">
                       <a
                         href="#inquiry"
-                        className="inline-flex items-center justify-center px-6 py-3 text-sm font-medium rounded-xl text-white bg-gray-900 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
+                        className="inline-flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 text-sm font-medium rounded-lg sm:rounded-xl text-white bg-gray-900 hover:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-200 transform hover:-translate-y-0.5"
                         onClick={() => {
                           logError('Service inquiry click', {
                             serviceId: service.id,

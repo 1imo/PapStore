@@ -1,27 +1,32 @@
 import Image from 'next/image';
+import { Clock, Award, MapPin, Shield } from 'lucide-react';
 
 const features = [
   {
     title: "Experience",
-    description: "20+ years of professional flooring expertise"
+    description: "20+ years of professional flooring expertise",
+    icon: Clock
   },
   {
     title: "Quality",
-    description: "Premium materials and expert installation"
+    description: "Premium materials and expert installation",
+    icon: Award
   },
   {
     title: "Service Area",
-    description: "Covering all of Greater Manchester"
+    description: "Covering all of Greater Manchester",
+    icon: MapPin
   },
   {
     title: "Guarantee",
-    description: "Satisfaction guaranteed on all work"
+    description: "Satisfaction guaranteed on all work",
+    icon: Shield
   }
 ];
 
 export function AboutUs() {
   return (
-    <section id="about" className="py-16 bg-gray-50">
+    <section id="about" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
           <div>
@@ -41,6 +46,7 @@ export function AboutUs() {
                     key={feature.title}
                     className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
                   >
+                    <feature.icon className="h-6 w-6 text-blue-600 mb-3" />
                     <h3 className="text-lg font-bold text-gray-900">
                       {feature.title}
                     </h3>
@@ -53,17 +59,15 @@ export function AboutUs() {
             </div>
           </div>
 
-          <div className="mt-12 lg:mt-0">
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-xl">
-              <Image
-                src="https://www.floorstyles.co.uk/wp-content/uploads/2023/06/Likewise-Rugs-Matting-Liszt-Eleanor-Blue-Tile-Effect-Vinyl-Flooring85R840FRSP.webp"
-                alt="Our team at work"
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                priority
-              />
-            </div>
+          <div className="mt-12 lg:mt-0 relative h-full w-full rounded-lg overflow-hidden shadow-xl hidden lg:block">
+            <Image
+              src="https://images.squarespace-cdn.com/content/v1/5d727ad66b29cc0001f38cf4/1567788811067-B9G51LP1Q3VERT8L67JB/ZancorHomes.jpg"
+              alt="Our team at work"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              priority
+            />
           </div>
         </div>
       </div>

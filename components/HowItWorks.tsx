@@ -36,14 +36,14 @@ export function HowItWorks() {
         </div>
 
         <div className="mt-16">
-          <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-8 md:gap-12 md:grid-cols-3">
             {steps.map((step, index) => (
               <div
                 key={step.name}
-                className="relative"
+                className="relative pt-4 px-4 md:pt-0 md:px-0"
               >
                 {/* Step number badge */}
-                <div className="absolute -top-4 -left-4 w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold z-3">
+                <div className="absolute top-0 left-0 md:-top-4 md:-left-4 w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold z-3">
                   {index + 1}
                 </div>
 

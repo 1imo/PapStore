@@ -9,10 +9,14 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <AboutUs />
       <Services />
+      <div className="h-8 md:h-32 bg-white" />
+      <AboutUs />
+      <div className="h-8 md:h-32 bg-white" />
       <HowItWorks />
+      <div className="h-8 md:h-32 bg-white" />
       <Testimonials />
+      <div className="h-8 md:h-32 bg-white" />
       <InquiryForm />
     </>
   );
