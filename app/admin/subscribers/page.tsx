@@ -1,0 +1,183 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { logError, logInfo } from '@/lib/LoggingService';
+
+interface Subscriber {
+  id: number;
+  email: string;
+  name: string | null;
+  createdAt: string;
+  active: boolean;
+}
+
+export default function SubscribersPage() {
+  const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [expandedId, setExpandedId] = useState<number | null>(null);
+
+  useEffect(() => {
+    loadSubscribers();
+  }, []);
+
+  async function loadSubscribers() {
+    try {
+      const response = await fetch('/api/admin/subscribers');
+      const data = await response.json();
+      setSubscribers(data.subscribers);
+    } catch (error) {
+      await logError('Failed to load subscribers', { error });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function toggleSubscriberStatus(subscriber: Subscriber) {
+    try {
+      const response = await fetch(`/api/admin/subscribers/${subscriber.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          active: !subscriber.active,
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to update subscriber status');
+
+      await logInfo('Subscriber status updated', {
+        subscriberId: subscriber.id,
+        status: !subscriber.active,
+      });
+
+      loadSubscribers();
+    } catch (error) {
+      await logError('Failed to update subscriber status', { error });
+    }
+  }
+
+  function exportToCSV() {
+    try {
+      // Create CSV content
+      const headers = ['Email', 'Name', 'Joined Date', 'Status'];
+      const rows = subscribers.map(sub => [
+        sub.email,
+        sub.name || '',
+        new Date(sub.createdAt).toLocaleDateString(),
+        sub.active ? 'Active' : 'Inactive'
+      ]);
+      
+      const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.join(','))
+      ].join('\n');
+
+      // Create and trigger download
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `subscribers_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      logInfo('Subscribers list exported to CSV');
+    } catch (error) {
+      logError('Failed to export subscribers', { error });
+    }
+  }
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <div className="sm:flex sm:items-center">
+        <div className="sm:flex-auto">
+          <h1 className="text-3xl font-bold text-gray-900">Subscribers</h1>
+          <p className="mt-2 text-sm text-gray-700">
+            Manage your email subscribers
+          </p>
+        </div>
+        <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none space-x-4">
+          <button
+            onClick={exportToCSV}
+            className="inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-colors duration-200"
+          >
+            Export to CSV
+          </button>
+          <button
+            onClick={() => window.location.reload()}
+            className="inline-flex items-center justify-center rounded-xl border border-transparent bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 transition-colors duration-200"
+          >
+            Refresh
+          </button>
+        </div>
+      </div>
+
+      <div className="mt-8">
+        <div className="overflow-hidden shadow-sm rounded-xl border border-gray-200">
+          <table className="min-w-full divide-y divide-gray-300">
+            <thead className="bg-gray-50">
+              <tr>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Email
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Name
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Joined Date
+                </th>
+                <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  Status
+                </th>
+                <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200 bg-white">
+              {subscribers.map((subscriber) => (
+                <tr 
+                  key={subscriber.id}
+                  className="hover:bg-gray-50 transition-colors"
+                >
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+                    {subscriber.email}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {subscriber.name || '-'}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    {new Date(subscriber.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                    <span className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
+                      subscriber.active 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {subscriber.active ? 'Active' : 'Inactive'}
+                    </span>
+                  </td>
+                  <td className="whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                    <button
+                      onClick={() => toggleSubscriberStatus(subscriber)}
+                      className="text-gray-900 hover:text-gray-700 transition-colors duration-200"
+                    >
+                      {subscriber.active ? 'Deactivate' : 'Activate'}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+} 

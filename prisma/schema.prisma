@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Inquiry Model
+model Inquiry {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String
+  message     String
+  service     String?
+  marketing   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  responded   Boolean   @default(false)
+  respondedAt DateTime?
+
+  @@index([createdAt, responded])
+} 
+
+// Subscriber Model (Email List)
+model Subscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String?  
+  createdAt DateTime @default(now())
+  active    Boolean  @default(true)
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+// Service Model (For dynamic service listing)
+model Service {
+  id          Int     @id @default(autoincrement())
+  name        String  
+  description String  
+  imageUrl    String? 
+  isActive    Boolean @default(true)
+  order       Int     @default(0)  // For controlling display order
+
+  @@index([isActive])
+  @@index([order])
+}
+
+// Log table for system events and audit trail
+model Log {
+  id        Int      @id @default(autoincrement())
+  level     String   // 'INFO', 'WARN', 'ERROR'
+  message   String
+  metadata  String?  // JSON string for additional data
+  source    String   // Component/feature that generated the log
+  createdAt DateTime @default(now())
+
+  @@index([level])
+  @@index([source])
+  @@index([createdAt])
+}
