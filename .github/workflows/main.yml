@@ -19,10 +19,8 @@ jobs:
     - name: Deploy
       run: |
         sshpass -p "${{ secrets.PWD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.USR }}@${{ secrets.HOST }} << 'EOF'
-          # Navigate to the target directory
-          cd /root/PapStore || echo "Directory /root/PapStore not found"
-          
-          # Print current directory and list files for inspection
-          pwd
-          ls -la
+          # Ensure the correct directory exists, and then perform the deployment
+          git pull origin main
+          npm install               
+          npx pm2 restart 2
         EOF
