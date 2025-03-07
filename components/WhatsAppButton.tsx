@@ -17,9 +17,10 @@ export function WhatsAppButton() {
       onClick={handleClick}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-4 right-4 z-50 rounded-full bg-green-500 p-3 text-white shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+      className="fixed bottom-4 right-4 z-50 flex items-center rounded-full bg-green-500 px-4 py-2 text-white shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
     >
-      <MessageCircle size={24} />
+      <MessageCircle size={24} className="mr-2" />
+      <span className="font-medium">WhatsApp us</span>
       <span className="sr-only">Contact via WhatsApp</span>
     </a>
   );

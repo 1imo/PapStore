@@ -78,31 +78,56 @@ export function Header() {
         
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          <div className="fixed inset-0 z-50 md:hidden">
+            {/* Dark overlay */}
+            <div 
+              className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            {/* Menu panel */}
+            <div className="fixed inset-y-0 right-0 w-screen bg-white shadow-xl">
+              <div className="flex w-full items-center justify-between py-4 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
+                <div className="flex items-center">
+                  <Link href="/" className="flex items-center">
+                    <span className="text-2xl font-bold text-gray-900 tracking-tight">
+                      Pap<span className="text-blue-600">Store</span>
+                    </span>
+                  </Link>
+                </div>
+                <button
+                  type="button"
+                  className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <span className="sr-only">Close menu</span>
+                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+              </div>
+              <div className="px-4 sm:px-6 lg:px-8 py-4 space-y-2">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    onClick={() => {
+                      handleNavClick(item.name, item.href);
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+                <a
+                  href="#inquiry"
+                  className="block rounded-lg px-3 py-2 text-base font-medium text-white bg-gray-900 hover:bg-gray-800 mt-4"
                   onClick={() => {
-                    handleNavClick(item.name, item.href);
+                    handleNavClick('Get Quote', '#inquiry');
                     setMobileMenuOpen(false);
                   }}
                 >
-                  {item.name}
-                </Link>
-              ))}
-              <a
-                href="#inquiry"
-                className="block rounded-lg px-3 py-2 text-base font-medium text-white bg-gray-900 hover:bg-gray-800 mt-2"
-                onClick={() => {
-                  handleNavClick('Get Quote', '#inquiry');
-                  setMobileMenuOpen(false);
-                }}
-              >
-                Get Quote
-              </a>
+                  Get Quote
+                </a>
+              </div>
             </div>
           </div>
         )}

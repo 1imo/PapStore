@@ -4,7 +4,7 @@ import { logInfo, logError } from '@/lib/LoggingService';
 
 export async function PATCH(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: { id: string } } & { searchParams: URLSearchParams }
 ) {
     try {
         const id = parseInt(params.id);

@@ -65,35 +65,14 @@ export default function SubscribersPage() {
     }
   }
 
-  function exportToCSV() {
+  async function exportToCSV() {
     try {
-      // Create CSV content
-      const headers = ['Email', 'Name', 'Joined Date', 'Status'];
-      const rows = subscribers.map(sub => [
-        sub.email,
-        sub.name || '',
-        new Date(sub.createdAt).toLocaleDateString(),
-        sub.active ? 'Active' : 'Inactive'
-      ]);
-      
-      const csvContent = [
-        headers.join(','),
-        ...rows.map(row => row.join(','))
-      ].join('\n');
-
-      // Create and trigger download
-      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', `subscribers_${new Date().toISOString().split('T')[0]}.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      logInfo('Subscribers list exported to CSV');
+      await logInfo('Subscribers CSV export initiated');
+      window.location.href = '/api/admin/subscribers/export';
     } catch (error) {
-      logError('Failed to export subscribers', { error });
+      if (!(error instanceof DOMException && error.name === 'AbortError')) {
+        await logError('Failed to initiate CSV export', { error });
+      }
     }
   }
 
