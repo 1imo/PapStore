@@ -19,7 +19,7 @@ jobs:
     - name: Deploy
       run: |
         sshpass -p "${{ secrets.PWD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.USR }}@${{ secrets.HOST }} << 'EOF'
-          cd /root/Papstore
+          cd Papstore
           pwd
           git pull origin main
           npm install               
