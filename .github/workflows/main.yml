@@ -21,6 +21,7 @@ jobs:
         sshpass -p "${{ secrets.PWD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.USR }}@${{ secrets.HOST }} << 'EOF'
           pwd
           ls -la
+          cd Papstore
           git fetch
           git pull
           npm install               
