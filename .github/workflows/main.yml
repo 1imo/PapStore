@@ -19,8 +19,8 @@ jobs:
     - name: Deploy
       run: |
         sshpass -p "${{ secrets.PWD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.USR }}@${{ secrets.HOST }} << 'EOF'
-          # Ensure the correct directory exists, and then perform the deployment
-          git pull origin main
+          git fetch
+          git pull
           npm install               
           npx pm2 restart 2
         EOF
