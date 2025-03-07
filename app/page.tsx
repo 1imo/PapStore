@@ -5,6 +5,7 @@ import { AboutUs } from '@/components/AboutUs';
 import { Testimonials } from '@/components/Testimonials';
 import { InquiryForm } from '@/components/InquiryForm';
 import { EmailBanner } from '@/components/EmailBanner';
+import { FlooringGuide } from '@/components/FlooringGuide';
 
 export default function Home() {
   return (
@@ -12,6 +13,8 @@ export default function Home() {
       <EmailBanner />
       <Hero />
       <Services />
+      <div className="h-8 md:h-32 bg-white" />
+      <FlooringGuide />
       <div className="h-8 md:h-32 bg-white" />
       <AboutUs />
       <div className="h-8 md:h-32 bg-white" />

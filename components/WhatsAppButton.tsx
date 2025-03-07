@@ -12,16 +12,22 @@ export function WhatsAppButton() {
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
 
   return (
-    <a
-      href={whatsappUrl}
-      onClick={handleClick}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="fixed bottom-4 right-4 z-50 flex items-center rounded-full bg-green-500 px-4 py-2 text-white shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-    >
-      <MessageCircle size={24} className="mr-2" />
-      <span className="font-medium">WhatsApp us</span>
-      <span className="sr-only">Contact via WhatsApp</span>
-    </a>
+    <div className="fixed bottom-2 sm:bottom-5 w-full z-40">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-end">
+          <a
+            href={whatsappUrl}
+            onClick={handleClick}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center rounded-full bg-green-500 px-4 py-2 text-white shadow-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+          >
+            <MessageCircle size={24} className="mr-2" />
+            <span className="font-medium">WhatsApp us</span>
+            <span className="sr-only">Contact via WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
   );
 } 
