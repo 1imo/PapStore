@@ -22,6 +22,8 @@ jobs:
           pwd
           ls -la
           cd Papstore
+          pwd
+          ls -la
           git fetch
           git pull
           npm install               
