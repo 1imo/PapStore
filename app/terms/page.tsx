@@ -1,70 +1,62 @@
 export default function Terms() {
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-black mb-8">Terms and Conditions</h1>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div>
+          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            Terms and Conditions
+          </h2>
+          <p className="mt-4 text-xl text-gray-700">
+            Our commitment to quality and service
+          </p>
+        </div>
         
-        <div className="prose prose-slate max-w-none space-y-8 text-black [&_h2]:text-black [&_p]:text-black [&_li]:text-black">
-          <h2>1. Agreement to Terms</h2>
-          <p>
-            By accessing or using our services, you agree to be bound by these Terms and Conditions.
+        <div className="mt-12 space-y-8">
+          <p className="text-sm text-gray-500">Last Updated: {new Date().toLocaleDateString()}</p>
+
+          <p className="text-gray-700 leading-relaxed">
+            Welcome to PapStore, Manchester's trusted flooring specialists. These terms and conditions 
+            outline the rules and regulations for using our services. By engaging with PapStore, 
+            you accept these terms in full. Please read them carefully before proceeding with any 
+            flooring project.
           </p>
 
-          <h2>2. Services</h2>
-          <p>
-            We provide flooring installation and related services. All services are subject to:
-          </p>
-          <ul>
-            <li>Availability</li>
-            <li>Accurate measurement and assessment</li>
-            <li>Suitable installation conditions</li>
-            <li>Agreement on final quote</li>
-          </ul>
-
-          <h2>3. Quotes and Pricing</h2>
-          <p>
-            All quotes are:
-          </p>
-          <ul>
-            <li>Valid for 30 days</li>
-            <li>Subject to site inspection</li>
-            <li>Exclusive of unforeseen additional work</li>
-          </ul>
-
-          <h2>4. Warranties</h2>
-          <p>
-            Our workmanship is guaranteed for [X] years, subject to:
-          </p>
-          <ul>
-            <li>Proper maintenance</li>
-            <li>Normal wear and tear</li>
-            <li>Manufacturer's specifications</li>
-          </ul>
-
-          <h2>5. Cancellation Policy</h2>
-          <p>
-            Cancellations must be made at least 48 hours before scheduled work.
-            Deposits may be non-refundable.
+          <p className="text-gray-700 leading-relaxed">
+            Our commitment to quality begins with our service agreement. When you choose PapStore, 
+            you're selecting a professional team dedicated to excellence in flooring installation. 
+            We provide detailed quotes valid for 30 days, and while we strive to maintain absolute 
+            accuracy, final pricing may adjust based on site conditions discovered during inspection. 
+            We require a 25% deposit to secure your installation date, with the balance due upon 
+            satisfactory completion.
           </p>
 
-          <h2>6. Liability</h2>
-          <p>
-            Our liability is limited to the value of the services provided.
-            We maintain appropriate insurance coverage.
+          <p className="text-gray-700 leading-relaxed">
+            Every installation comes with our comprehensive 12-month workmanship warranty. This 
+            warranty covers our installation work, ensuring your peace of mind. However, it's 
+            important to note that this warranty requires proper maintenance and adherence to 
+            manufacturer guidelines. Normal wear and tear is expected, and any unauthorized 
+            modifications may void the warranty.
           </p>
 
-          <h2>7. Contact Information</h2>
-          <p>
-            For any questions regarding these terms, please contact us at:
-          </p>
-          <p>
-            Email: info@papstore.com<br />
-            Phone: [Your Phone Number]<br />
-            Address: [Your Address]
+          <p className="text-gray-700 leading-relaxed">
+            We understand that plans can change. Our cancellation policy requires 48 hours' notice 
+            for appointment changes. Deposits become non-refundable within 7 days of scheduled 
+            installation, reflecting our commitment to resource allocation and scheduling. We're 
+            happy to reschedule when possible, though fees may apply for late changes.
           </p>
 
-          <p className="text-sm text-gray-500 mt-12 pt-4 border-t">
-            Last updated: {new Date().toLocaleDateString()}
+          <p className="text-gray-700 leading-relaxed">
+            Your satisfaction is our priority. We maintain high standards of professionalism, 
+            from our initial consultation through to project completion. Our team follows strict 
+            safety protocols and maintains necessary insurance coverage. We respect your property 
+            and ensure thorough cleanup after installation.
+          </p>
+
+          <p className="text-gray-700 leading-relaxed">
+            Communication is key to our success. We pledge to keep you informed throughout your 
+            project, addressing any concerns promptly. Our team is available during business hours 
+            to answer questions and provide support. We believe in building lasting relationships 
+            with our clients through transparency and exceptional service.
           </p>
         </div>
       </div>

@@ -14,7 +14,7 @@ const features = [
   },
   {
     title: "Service Area",
-    description: "Covering all of Greater Manchester",
+    description: "Covering Surrey, London, and surrounding areas",
     icon: MapPin
   },
   {
@@ -46,7 +46,7 @@ export function AboutUs() {
                     key={feature.title}
                     className="bg-white p-6 rounded-lg shadow-md border border-gray-200"
                   >
-                    <feature.icon className="h-6 w-6 text-blue-600 mb-3" />
+                    <feature.icon className="h-6 w-6 text-[#00603A] mb-3" />
                     <h3 className="text-lg font-bold text-gray-900">
                       {feature.title}
                     </h3>

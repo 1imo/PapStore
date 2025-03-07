@@ -45,7 +45,7 @@ export function HowItWorks() {
                 className="relative pt-4 px-4 md:pt-0 md:px-0"
               >
                 {/* Step number badge */}
-                <div className="absolute top-0 left-0 md:-top-4 md:-left-4 w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center font-bold z-3">
+                <div className="absolute top-0 left-0 md:-top-4 md:-left-4 w-8 h-8 bg-[#00603A] text-white rounded-full flex items-center justify-center font-bold z-3">
                   {index + 1}
                 </div>
 
@@ -81,7 +81,7 @@ export function HowItWorks() {
         <div className="mt-12 text-center">
           <a
             href="#inquiry"
-            className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-md text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200 shadow-md hover:shadow-lg"
+            className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-xl text-white bg-[#00603A] hover:bg-[#004e2f] transition-colors duration-200 shadow-md hover:shadow-lg"
             onClick={(e) => {
               e.preventDefault();
               document.querySelector('#inquiry')?.scrollIntoView({ behavior: 'smooth' });

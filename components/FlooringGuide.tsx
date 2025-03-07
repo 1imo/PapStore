@@ -166,7 +166,7 @@ export function FlooringGuide() {
                 onClick={() => setSelectedType(type.id)}
                 className={`px-6 py-3 rounded-xl font-medium text-lg transition-all duration-200 ${
                   selectedType === type.id
-                    ? 'bg-gray-900 text-white shadow-lg'
+                    ? 'bg-[#00603A] text-white shadow-lg'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -217,7 +217,7 @@ export function FlooringGuide() {
         <div className="mt-12 text-center">
           <a
             href="#inquiry"
-            className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-xl text-white bg-gray-900 hover:bg-gray-800 transition-colors duration-200 shadow-md hover:shadow-lg"
+            className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-xl text-white bg-[#00603A] hover:bg-[#004e2f] transition-colors duration-200 shadow-md hover:shadow-lg"
             onClick={(e) => {
               e.preventDefault();
               document.querySelector('#inquiry')?.scrollIntoView({ behavior: 'smooth' });

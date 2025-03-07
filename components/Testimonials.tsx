@@ -65,7 +65,7 @@ export function Testimonials() {
               </p>
               <div className="mt-6 flex items-center">
                 <div className="flex-shrink-0">
-                  <div className="h-12 w-12 rounded-full bg-gray-900 flex items-center justify-center">
+                  <div className="h-12 w-12 rounded-full bg-[#00603A] flex items-center justify-center">
                     <span className="text-white font-semibold text-sm">
                       {getInitials(testimonial.author)}
                     </span>
