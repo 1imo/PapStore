@@ -21,7 +21,8 @@ export default function ServicesPage() {
   const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
 
-  const emptyService: Omit<Service, 'id'> = {
+  const emptyService: Service = {
+    id: -1,
     name: '',
     description: '',
     imageUrl: null,
@@ -66,7 +67,7 @@ export default function ServicesPage() {
 
       const serviceData = 'id' in editingService 
         ? editingService 
-        : { ...editingService, order: services.length };
+        : { ...emptyService, order: services.length };
 
       const response = await fetch(url, {
         method,

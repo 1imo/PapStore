@@ -4,7 +4,7 @@ import { logError, logInfo } from '@/lib/LoggingService';
 
 export async function PATCH(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }
 ) {
     try {
         const data = await request.json();

@@ -1,10 +1,11 @@
+import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { logInfo, logError } from '@/lib/LoggingService';
 
 export async function PATCH(
     request: Request,
-    { params }: { params: { id: string } } & { searchParams: URLSearchParams }
+    { params }
 ) {
     try {
         const id = parseInt(params.id);
@@ -19,7 +20,6 @@ export async function PATCH(
         });
 
         await logInfo('Inquiry updated', { inquiryId: id });
-
         return NextResponse.json({ inquiry });
     } catch (error) {
         await logError('Failed to update inquiry', { error });
@@ -28,4 +28,4 @@ export async function PATCH(
             { status: 500 }
         );
     }
-} 
+}

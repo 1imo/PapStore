@@ -4,7 +4,7 @@ import { logInfo, logError } from '@/lib/LoggingService';
 
 export async function PUT(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }
 ) {
     try {
         const id = parseInt(params.id);
@@ -29,7 +29,7 @@ export async function PUT(
 
 export async function DELETE(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }
 ) {
     try {
         const id = parseInt(params.id);
