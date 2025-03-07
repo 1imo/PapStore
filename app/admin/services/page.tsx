@@ -60,14 +60,21 @@ export default function ServicesPage() {
     if (!editingService) return;
 
     try {
-      const method = 'id' in editingService ? 'PUT' : 'POST';
-      const url = 'id' in editingService 
-        ? `/api/admin/services/${editingService.id}` 
-        : '/api/admin/services';
+      const isNewService = editingService.id === -1;
+      const method = isNewService ? 'POST' : 'PUT';
+      const url = isNewService
+        ? '/api/admin/services'
+        : `/api/admin/services/${editingService.id}`;
 
-      const serviceData = 'id' in editingService 
-        ? editingService 
-        : { ...emptyService, order: services.length };
+      const serviceData = isNewService
+        ? {
+            name: editingService.name,
+            description: editingService.description,
+            imageUrl: editingService.imageUrl,
+            isActive: editingService.isActive,
+            order: services.length
+          }
+        : editingService;
 
       const response = await fetch(url, {
         method,
@@ -80,7 +87,7 @@ export default function ServicesPage() {
       if (!response.ok) throw new Error('Failed to save service');
 
       await logInfo('Service saved successfully', {
-        serviceId: 'id' in editingService ? editingService.id : undefined,
+        serviceId: isNewService ? undefined : editingService.id,
       });
 
       setEditingService(null);
