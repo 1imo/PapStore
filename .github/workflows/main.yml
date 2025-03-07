@@ -19,6 +19,8 @@ jobs:
     - name: Deploy
       run: |
         sshpass -p "${{ secrets.PWD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.USR }}@${{ secrets.HOST }} << 'EOF'
+          cd /root/Papstore
+          pwd
           git pull origin main
           npm install               
           npx pm2 restart 2
