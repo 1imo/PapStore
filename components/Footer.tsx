@@ -43,6 +43,11 @@ export function Footer() {
                   Contact Us
                 </Link>
               </li>
+              <li>
+                <Link href="/sitemap.xml" className="text-gray-600 hover:text-[#00603A] text-sm">
+                  Sitemap
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -68,6 +73,17 @@ export function Footer() {
                   onClick={() => handleSocialClick('instagram')}
                 >
                   Instagram
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://api.whatsapp.com/send?phone=447561231794" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-gray-600 hover:text-[#00603A] text-sm"
+                  onClick={() => handleSocialClick('whatsapp')}
+                >
+                  WhatsApp
                 </a>
               </li>
             </ul>

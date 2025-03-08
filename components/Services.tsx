@@ -34,10 +34,53 @@ export function Services() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const isMobile = useIsMobile();
-
+  const [isVisible, setIsVisible] = useState(false);
+  
   useEffect(() => {
     loadServices();
+    
+    // Setup intersection observer
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    
+    const section = document.getElementById('services');
+    if (section) observer.observe(section);
+    
+    return () => {
+      if (section) observer.unobserve(section);
+    };
   }, []);
+
+  // Auto-scroll effect
+  useEffect(() => {
+    if (!isMobile || !isVisible || services.length === 0) return;
+    
+    const interval = setInterval(() => {
+      const container = document.querySelector('#services .overflow-x-auto');
+      if (!container) return;
+      
+      const scrollWidth = container.scrollWidth;
+      const clientWidth = container.clientWidth;
+      const currentScroll = container.scrollLeft;
+      
+      // Calculate next scroll position
+      let nextScroll = currentScroll + clientWidth + 1;
+      
+      // Only reset to start if we're at the very end
+      if (nextScroll > scrollWidth) {
+        nextScroll = 0;
+      }
+      
+      container.scrollTo({
+        left: nextScroll,
+        behavior: 'smooth'
+      });
+    }, 4000);
+    
+    return () => clearInterval(interval);
+  }, [isMobile, isVisible, services.length]);
 
   async function loadServices() {
     try {
@@ -236,7 +279,8 @@ export function Services() {
           })}
           {isMobile && <div className="w-[1] flex-shrink-0" />}
         </div>
-      </div>
+
+       </div>
     </section>
   );
 }
