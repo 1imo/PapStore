@@ -98,15 +98,19 @@ export function Services() {
     <section id="services" className="py-8 sm:py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
             Our Services
           </h2>
-          <p className="mt-3 sm:mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-500">
+          <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-700">
             Choose from our range of professional flooring solutions
           </p>
         </div>
 
-        <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-12 gap-4 md:gap-6 max-w-7xl mx-auto">
+        <div className={`mt-8 sm:mt-12 ${
+          isMobile 
+            ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-4 w-screen relative left-1/2 right-1/2 -translate-x-1/2 scrollbar-hide scroll-smooth pb-4 after:content-[""] after:block after:w-2 after:flex-shrink-0' 
+            : 'grid grid-cols-12 gap-4 md:gap-6'
+        } max-w-7xl mx-auto`}>
           {services.map((service, index) => {
             const gridClass = getBentoGridClass(index);
             const isLarge = gridClass.includes('row-span-2');
@@ -160,10 +164,32 @@ export function Services() {
             return (
               <div
                 key={service.id}
-                className={`group overflow-hidden rounded-2xl sm:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col ${gridClass} ${isMobile ? 'h-[300px]' : 'min-h-[250px] sm:min-h-0'} ${cardStyle.bgColor}`}
+                className={`group overflow-hidden rounded-2xl sm:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col relative ${
+                  isMobile 
+                    ? 'w-[85vw] flex-shrink-0 aspect-square snap-always snap-center first:ml-4' 
+                    : gridClass
+                } ${cardStyle.bgColor}`}
               >
+                {isMobile && (
+                  <div className="absolute top-4 right-4 z-50">
+                    <a 
+                      href="#inquiry" 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        document.getElementById('inquiry')?.scrollIntoView({ 
+                          behavior: 'smooth',
+                          block: 'start'
+                        });
+                      }}
+                      className="inline-flex px-4 py-2 rounded-xl font-medium text-white bg-[#00603A] hover:bg-[#004e2f] transition-colors duration-200 shadow-md hover:shadow-lg"
+                    >
+                      Get Quote
+                    </a>
+                  </div>
+                )}
+                
                 {showImage && (
-                  <div className={`relative ${isFullImageCard ? 'h-full' : 'h-full'} w-full overflow-hidden`}>
+                  <div className={`relative ${isFullImageCard ? 'h-full' : 'h-full'} w-full overflow-hidden z-10`}>
                     <Image
                       src={service.imageUrl || "/placeholder.jpg"}
                       alt={service.name}
@@ -174,12 +200,14 @@ export function Services() {
                     
                     {isImageOverlay && (
                       <div className="absolute bottom-0 left-0 p-4 sm:p-6 md:p-8 w-full flex flex-col justify-end h-full">
-                        <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+                        <h3 className={`
+                          text-2xl font-bold text-white mb-2
+                          ${isMobile ? 'drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]' : 'sm:text-2xl md:text-3xl'}
+                        `}>
                           {service.name}
                         </h3>
-                        {/* Only show description on desktop and if it's a large card */}
                         {!isMobile && isLarge && (
-                          <p className="text-white/90 text-sm sm:text-base max-w-md">
+                          <p className="text-white/90 text-base max-w-md">
                             {service.description}
                           </p>
                         )}
@@ -191,12 +219,11 @@ export function Services() {
                 {(!showImage || !isImageOverlay) && (
                   <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between">
                     <div>
-                      <h3 className={`${isLarge ? 'text-xl sm:text-2xl md:text-3xl' : 'text-lg sm:text-xl md:text-2xl'} font-bold text-gray-900 mb-3 sm:mb-4`}>
+                      <h3 className="text-xl font-bold text-gray-900 mb-3 sm:mb-4 sm:text-2xl md:text-3xl">
                         {service.name}
                       </h3>
-                      {/* Only show description on desktop */}
                       {!isMobile && (
-                        <p className={`${isLarge ? 'text-sm sm:text-base' : 'text-xs sm:text-sm'} text-gray-600`}>
+                        <p className="text-base text-gray-700">
                           {service.description}
                         </p>
                       )}
@@ -206,6 +233,8 @@ export function Services() {
               </div>
             );
           })}
+          {/* Add padding element after last card on mobile */}
+          <div className="min-w-[16px] flex-shrink-0 sm:hidden" aria-hidden="true" />
         </div>
       </div>
     </section>
