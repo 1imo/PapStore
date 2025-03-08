@@ -8,7 +8,7 @@ export function WhatsAppButton() {
     await logInfo('WhatsApp button clicked');
   };
 
-  const phoneNumber = '447301503451';
+  const phoneNumber = '447861172194';
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
 
   return (
