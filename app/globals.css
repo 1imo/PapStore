@@ -48,3 +48,34 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
 }
+
+@keyframes autoScroll {
+  0% {
+    scroll-snap-type: x mandatory;
+  }
+  100% {
+    transform: translateX(calc(-100% + 100vw));
+  }
+}
+
+.auto-scroll {
+  animation: autoScroll 20s linear infinite;
+  animation-play-state: paused;
+  animation-delay: 5s;
+}
+
+.auto-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Only play animation when the element is in view */
+@media (prefers-reduced-motion: no-preference) {
+  .auto-scroll.in-view:not(:hover) {
+    animation-play-state: running;
+  }
+}
+
+/* Hide scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
