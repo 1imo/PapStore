@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { ClientLoggingService } from '@/lib/ClientLoggingService';
+import { smoothScrollToElement } from '@/lib/scrollUtils';
 
 export function Footer() {
   const handleSocialClick = async (platform: string) => {
@@ -39,7 +40,14 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#inquiry" className="text-gray-600 hover:text-[#00603A] text-sm">
+                <Link 
+                  href="#inquiry" 
+                  className="text-gray-600 hover:text-[#00603A] text-sm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    smoothScrollToElement('inquiry');
+                  }}
+                >
                   Contact Us
                 </Link>
               </li>

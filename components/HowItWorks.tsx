@@ -5,6 +5,7 @@ import {
   UserIcon as RulerIcon, 
   WrenchScrewdriverIcon 
 } from '@heroicons/react/24/outline';
+import { smoothScrollToElement } from '@/lib/scrollUtils';
 
 const steps = [
   {
@@ -84,7 +85,7 @@ export function HowItWorks() {
             className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-xl text-white bg-[#00603A] hover:bg-[#004e2f] transition-colors duration-200 shadow-md hover:shadow-lg"
             onClick={(e) => {
               e.preventDefault();
-              document.querySelector('#inquiry')?.scrollIntoView({ behavior: 'smooth' });
+              smoothScrollToElement('inquiry');
             }}
           >
             Start Your Project
