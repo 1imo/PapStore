@@ -10,6 +10,9 @@ import { smoothScrollToElement } from '@/lib/scrollUtils';
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Services', href: '#services' },
+  { name: 'How It Works', href: '#how-it-works' },
+  { name: 'Reviews', href: '#testimonials' },
+  { name: 'Guide', href: '#flooring-guide' },
   { name: 'About', href: '#about' },
   { name: 'Contact', href: '#inquiry' },
 ];

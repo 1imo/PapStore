@@ -147,7 +147,7 @@ export function FlooringGuide() {
   const [selectedType, setSelectedType] = useState(flooringTypes[0].id);
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-white" id='flooring-guide'>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -188,7 +188,7 @@ export function FlooringGuide() {
                 {type.types.map((subType) => (
                   <div
                     key={subType.name}
-                    className="flex-none w-[85%] snap-center sm:w-auto bg-white rounded-xl p-6 shadow-md border border-gray-200"
+                    className="flex-none w-[85%] snap-center sm:w-auto bg-white rounded-xl p-6 shadow-md border border-gray-200 mb-2"
                   >
                     <h3 className="text-xl font-bold text-gray-900 mb-4">
                       {subType.name}
@@ -201,7 +201,7 @@ export function FlooringGuide() {
                       <ul className="space-y-2">
                         {subType.bestFor.map((use) => (
                           <li key={use} className="flex items-center text-gray-700">
-                            <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
+                            <CheckIcon className="h-5    w-5 text-green-500 mr-2" />
                             {use}
                           </li>
                         ))}

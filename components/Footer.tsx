@@ -85,7 +85,7 @@ export function Footer() {
               </li>
               <li>
                 <a 
-                  href="https://api.whatsapp.com/send?phone=447561231794" 
+                  href="https://api.whatsapp.com/send?phone=447301503451" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-gray-600 hover:text-[#00603A] text-sm"

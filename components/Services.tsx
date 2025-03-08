@@ -31,46 +31,57 @@ function useIsMobile() {
 }
 
 export function Services() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const services: Service[] = [
+     {
+      id: 1,
+      name: "Hardwood & Engineered Flooring",
+      description: "Premium solid hardwood and engineered wood installations. From classic oak to modern laminates, we offer solutions for every space and budget. Ideal for adding lasting value to your property.",
+      imageUrl: null,
+      isActive: true
+    },
+    {
+      id: 2,
+      name: "Vinyl, Linoleum & Carpet Solutions",
+      description: "Expert installation of durable vinyl, linoleum, and quality carpets. Perfect for high-traffic areas with countless designs available. Full removal and disposal service included.",
+      imageUrl: null,
+      isActive: true
+    },
+    {
+      id: 3,
+      name: "Commercial Flooring Solutions",
+      description: "Fast installation of durable commercial-grade flooring for businesses of all sizes. From retail spaces to offices, we ensure minimal disruption with maximum quality and longevity.",
+      imageUrl: null,
+      isActive: true
+    }
+  ];
   const isMobile = useIsMobile();
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    loadServices();
-    
-    // Setup intersection observer
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
-    
-    const section = document.getElementById('services');
-    if (section) observer.observe(section);
-    
-    return () => {
-      if (section) observer.unobserve(section);
-    };
-  }, []);
+  const [lastInteraction, setLastInteraction] = useState(0);
 
-  // Auto-scroll effect
   useEffect(() => {
-    if (!isMobile || !isVisible || services.length === 0) return;
-    
+    if (!isMobile) return;
+
+    const container = document.querySelector('#services .overflow-x-auto');
+    if (!container) return;
+
+    // Handle touch/interaction events
+    const handleInteraction = () => {
+      setLastInteraction(Date.now());
+    };
+
+    container.addEventListener('touchstart', handleInteraction);
+    container.addEventListener('mousedown', handleInteraction);
+
+    // Auto-scroll effect
     const interval = setInterval(() => {
-      const container = document.querySelector('#services .overflow-x-auto');
-      if (!container) return;
-      
+      // Check if 10 seconds have passed since last interaction
+      if (Date.now() - lastInteraction < 10000) return;
+
       const scrollWidth = container.scrollWidth;
       const clientWidth = container.clientWidth;
       const currentScroll = container.scrollLeft;
       
-      // Calculate next scroll position
-      let nextScroll = currentScroll + clientWidth + 1;
-      
-      // Only reset to start if we're at the very end
-      if (nextScroll > scrollWidth) {
+      let nextScroll = currentScroll + clientWidth;
+      if (nextScroll >= scrollWidth - clientWidth) {
         nextScroll = 0;
       }
       
@@ -79,67 +90,16 @@ export function Services() {
         behavior: 'smooth'
       });
     }, 4000);
-    
-    return () => clearInterval(interval);
-  }, [isMobile, isVisible, services.length]);
 
-  async function loadServices() {
-    try {
-      const response = await fetch('/api/services');
-      if (!response.ok) throw new Error('Failed to fetch services');
-      
-      const data = await response.json();
-      const activeServices = data.services.filter((s: Service) => s.isActive);
-      
-      if (activeServices.length === 0) {
-        setError('No services available at the moment');
-      } else {
-        setServices(activeServices);
-      }
-    } catch (error) {
-      await logError('Failed to load services', { error });
-      setError('Unable to load services. Please try again later.');
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (loading) {
-    return (
-      <section id="services" className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-pulse">Loading services...</div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section id="services" className="py-12 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-600">{error}</div>
-        </div>
-      </section>
-    );
-  }
-
-  // Fixed bento layout matching the provided design
-  const getBentoGridClass = (index) => {
-    // Based on the screenshot with 4 services
-    if (index === 0) return 'col-span-12 md:col-span-6 row-span-2'; // Left big card
-    if (index === 1) return 'col-span-12 md:col-span-6 row-span-1'; // Top right card
-    if (index === 2) return 'col-span-12 md:col-span-3 row-span-1'; // Bottom right small card
-    if (index === 3) return 'col-span-12 md:col-span-3 row-span-1'; // Bottom right small card
-    
-    // For any additional services beyond the first 4
-    return 'col-span-12 md:col-span-3 row-span-1';
-  };
+    return () => {
+      clearInterval(interval);
+      container.removeEventListener('touchstart', handleInteraction);
+      container.removeEventListener('mousedown', handleInteraction);
+    };
+  }, [isMobile, lastInteraction]);
 
   return (
-    <section id="services" className="py-8 sm:py-12 bg-white">
+    <section id="services" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
@@ -150,135 +110,63 @@ export function Services() {
           </p>
         </div>
 
-        <div className={`mt-8 sm:mt-12 ${
+        <div className={`mt-12 -mx-4 sm:mx-0 ${
           isMobile 
-            ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-4 w-screen relative left-1/2 right-1/2 -translate-x-1/2 scrollbar-hide scroll-smooth pb-4' 
-            : 'grid grid-cols-12 gap-4 md:gap-6'
-        } max-w-7xl mx-auto`}>
-          {services.map((service, index) => {
-            const gridClass = getBentoGridClass(index);
-            const isLarge = gridClass.includes('row-span-2');
-            
-            // Determine the card style based on index for variety
-            const getCardStyle = (index) => {
-              const styles = [
-                // Featured card with full background image (left tall card)
-                {
-                  imagePosition: 'full',
-                  titlePosition: 'overlay',
-                  imageHeight: 'h-full',
-                  textAlignment: 'text-left',
-                  bgColor: 'bg-transparent',
-                },
-                // Top right card
-                {
-                  imagePosition: 'none',
-                  titlePosition: 'top',
-                  imageHeight: 'h-0',
-                  textAlignment: 'text-left',
-                  bgColor: 'bg-white',
-                },
-                // Bottom right first small card
-                {
-                  imagePosition: 'none',
-                  titlePosition: 'top',
-                  imageHeight: 'h-0',
-                  textAlignment: 'text-left',
-                  bgColor: 'bg-white',
-                },
-                // Bottom right second small card (with image)
-                {
-                  imagePosition: 'full',
-                  titlePosition: 'overlay',
-                  imageHeight: 'h-full',
-                  textAlignment: 'text-left',
-                  bgColor: 'bg-transparent',
-                }
-              ];
-              return styles[index % styles.length];
-            };
-            
-            const cardStyle = getCardStyle(index);
-            // Always show images on mobile, otherwise follow desktop logic
-            const showImage = isMobile || (cardStyle.imagePosition !== 'none' && service.imageUrl);
-            const isFullImageCard = cardStyle.imagePosition === 'full';
-            // Always use overlay style on mobile
-            const isImageOverlay = isMobile || cardStyle.titlePosition === 'overlay';
-            
-            return (
-              <div
-                key={service.id}
-                className={`group overflow-hidden rounded-2xl sm:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col relative ${
-                  isMobile 
-                    ? 'w-[85vw] flex-shrink-0 aspect-square snap-always snap-center first:ml-4' +
-                      (index === services.length - 1 ? ' !snap-start' : '')
-                    : gridClass
-                } ${cardStyle.bgColor}`}
-              >
-                {isMobile && (
-                  <div className="absolute top-4 right-4 z-50">
-                    <a 
-                      href="#inquiry" 
-                      onClick={(e) => {
-                        e.preventDefault();
-                        smoothScrollToElement('inquiry');
-                      }}
-                      className="inline-flex px-4 py-2 rounded-xl font-medium text-white bg-[#00603A] hover:bg-[#004e2f] transition-colors duration-200 shadow-md hover:shadow-lg"
-                    >
-                      Get Quote
-                    </a>
-                  </div>
-                )}
-                
-                {showImage && (
-                  <div className={`relative ${isFullImageCard ? 'h-full' : 'h-full'} w-full overflow-hidden z-10`}>
-                    <Image
-                      src={service.imageUrl || "/placeholder.jpg"}
-                      alt={service.name}
-                      fill
-                      className="object-cover transform group-hover:scale-105 transition-transform duration-500"
+            ? 'flex overflow-x-auto snap-x snap-mandatory scrollbar-hide px-4 sm:px-0 gap-6 pb-6' 
+            : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'
+        }`}>
+          {services.map((service, index) => (
+            <div
+              key={service.id}
+              className={`group relative bg-white rounded-xl border border-gray-200 shadow-md hover:shadow-lg transition-all duration-300 ${
+                isMobile 
+                  ? 'w-[85vw] flex-shrink-0 snap-always snap-center' + 
+                    (index === services.length - 1 ? ' mr-4' : '')
+                  : ''
+              }`}
+            >
+              <div className="relative p-8 flex flex-col h-full">
+                <div className="w-14 h-14 mb-6 rounded-full bg-gray-100 flex items-center justify-center">
+                  <svg 
+                    className="w-8 h-8 text-gray-900" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M5 13l4 4L19 7" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                    
-                    {isImageOverlay && (
-                      <div className="absolute bottom-0 left-0 p-4 sm:p-6 md:p-8 w-full flex flex-col justify-end h-full">
-                        <h3 className={`
-                          text-2xl font-bold text-white mb-2 drop-shadow-lg
-                          ${isMobile ? 'drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]' : 'sm:text-3xl md:text-4xl'}
-                        `}>
-                          {service.name}
-                        </h3>
-                        {!isMobile && isLarge && (
-                          <p className="text-white/90 text-lg leading-relaxed max-w-md drop-shadow-lg">
-                            {service.description}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                )}
-                
-                {(!showImage || !isImageOverlay) && (
-                  <div className="p-4 sm:p-6 md:p-8 h-full flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 sm:mb-4 sm:text-2xl md:text-3xl">
-                        {service.name}
-                      </h3>
-                      {!isMobile && (
-                        <p className="text-base text-gray-700 leading-relaxed">
-                          {service.description}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-          {isMobile && <div className="w-[1] flex-shrink-0" />}
-        </div>
+                  </svg>
+                </div>
 
-       </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  {service.name}
+                </h3>
+                
+                <p className="text-gray-600 leading-relaxed flex-grow">
+                  {service.description}
+                </p>
+
+                <div className="mt-8">
+                  <a 
+                    href="#inquiry" 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      smoothScrollToElement('inquiry');
+                    }}
+                    className="inline-flex items-center px-8 py-3 rounded-xl font-medium text-white bg-[#00603A] hover:bg-[#004e2f] transition-colors duration-200 shadow-md hover:shadow-lg"
+                  >
+                    Get Quote
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
-  );
+  );    
 }
