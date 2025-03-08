@@ -80,8 +80,10 @@ export function Services() {
       const clientWidth = container.clientWidth;
       const currentScroll = container.scrollLeft;
       
-      let nextScroll = currentScroll + clientWidth;
-      if (nextScroll >= scrollWidth - clientWidth) {
+      let nextScroll = currentScroll + clientWidth + 1;
+      
+      // Only reset to start if we're at the very end
+      if (nextScroll > scrollWidth) {
         nextScroll = 0;
       }
       
