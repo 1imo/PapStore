@@ -108,7 +108,7 @@ export function Services() {
 
         <div className={`mt-8 sm:mt-12 ${
           isMobile 
-            ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-4 w-screen relative left-1/2 right-1/2 -translate-x-1/2 scrollbar-hide scroll-smooth pb-4 after:content-[""] after:block after:w-2 after:flex-shrink-0' 
+            ? 'flex overflow-x-auto snap-x snap-mandatory gap-4 -mx-4 w-screen relative left-1/2 right-1/2 -translate-x-1/2 scrollbar-hide scroll-smooth pb-4' 
             : 'grid grid-cols-12 gap-4 md:gap-6'
         } max-w-7xl mx-auto`}>
           {services.map((service, index) => {
@@ -166,7 +166,8 @@ export function Services() {
                 key={service.id}
                 className={`group overflow-hidden rounded-2xl sm:rounded-3xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col relative ${
                   isMobile 
-                    ? 'w-[85vw] flex-shrink-0 aspect-square snap-always snap-center first:ml-4' 
+                    ? 'w-[85vw] flex-shrink-0 aspect-square snap-always snap-center first:ml-4' +
+                      (index === services.length - 1 ? ' !snap-start' : '')
                     : gridClass
                 } ${cardStyle.bgColor}`}
               >
@@ -233,8 +234,7 @@ export function Services() {
               </div>
             );
           })}
-          {/* Add padding element after last card on mobile */}
-          <div className="min-w-[16px] flex-shrink-0 sm:hidden" aria-hidden="true" />
+          {isMobile && <div className="w-[1] flex-shrink-0" />}
         </div>
       </div>
     </section>
