@@ -158,13 +158,13 @@ export function FlooringGuide() {
         </div>
 
         {/* Flooring Type Selector */}
-        <div className="mt-12">
-          <div className="flex flex-wrap justify-center gap-4">
+        <div className="mt-12 -mx-4 sm:mx-0">
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide px-4 sm:flex sm:flex-wrap sm:justify-center sm:items-center sm:max-w-4xl sm:mx-auto">
             {flooringTypes.map((type) => (
               <button
                 key={type.id}
                 onClick={() => setSelectedType(type.id)}
-                className={`px-6 py-3 rounded-xl font-medium text-lg transition-all duration-200 ${
+                className={`flex-none snap-center px-6 py-3 rounded-xl font-medium text-lg transition-all duration-200 mr-3 sm:mr-2 sm:mb-2 ${
                   selectedType === type.id
                     ? 'bg-[#00603A] text-white shadow-lg'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -177,17 +177,17 @@ export function FlooringGuide() {
         </div>
 
         {/* Content Display */}
-        <div className="mt-12">
+        <div className="mt-12 -mx-4 sm:mx-0">
           {flooringTypes.map((type) => (
             <div
               key={type.id}
               className={`${selectedType === type.id ? 'block' : 'hidden'}`}
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide px-4 sm:px-0 gap-4 pb-4 sm:pb-0 sm:grid sm:grid-cols-2 lg:grid-cols-4">
                 {type.types.map((subType) => (
                   <div
                     key={subType.name}
-                    className="bg-white rounded-xl p-6 shadow-md border border-gray-200"
+                    className="flex-none w-[85%] snap-center sm:w-auto bg-white rounded-xl p-6 shadow-md border border-gray-200"
                   >
                     <h3 className="text-xl font-bold text-gray-900 mb-4">
                       {subType.name}
