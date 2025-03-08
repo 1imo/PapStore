@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { logError } from '@/lib/LoggingService';
+import { smoothScrollToElement } from '@/lib/scrollUtils';
 
 interface Service {
   id: number;
@@ -220,10 +221,7 @@ export function Services() {
                       href="#inquiry" 
                       onClick={(e) => {
                         e.preventDefault();
-                        document.getElementById('inquiry')?.scrollIntoView({ 
-                          behavior: 'smooth',
-                          block: 'start'
-                        });
+                        smoothScrollToElement('inquiry');
                       }}
                       className="inline-flex px-4 py-2 rounded-xl font-medium text-white bg-[#00603A] hover:bg-[#004e2f] transition-colors duration-200 shadow-md hover:shadow-lg"
                     >
@@ -245,13 +243,13 @@ export function Services() {
                     {isImageOverlay && (
                       <div className="absolute bottom-0 left-0 p-4 sm:p-6 md:p-8 w-full flex flex-col justify-end h-full">
                         <h3 className={`
-                          text-2xl font-bold text-white mb-2
-                          ${isMobile ? 'drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]' : 'sm:text-2xl md:text-3xl'}
+                          text-2xl font-bold text-white mb-2 drop-shadow-lg
+                          ${isMobile ? 'drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]' : 'sm:text-3xl md:text-4xl'}
                         `}>
                           {service.name}
                         </h3>
                         {!isMobile && isLarge && (
-                          <p className="text-white/90 text-base max-w-md">
+                          <p className="text-white/90 text-lg leading-relaxed max-w-md drop-shadow-lg">
                             {service.description}
                           </p>
                         )}
@@ -267,7 +265,7 @@ export function Services() {
                         {service.name}
                       </h3>
                       {!isMobile && (
-                        <p className="text-base text-gray-700">
+                        <p className="text-base text-gray-700 leading-relaxed">
                           {service.description}
                         </p>
                       )}

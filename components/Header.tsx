@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { logInfo } from '@/lib/LoggingService';
 import Image from 'next/image';
+import { smoothScrollToElement } from '@/lib/scrollUtils';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -17,18 +18,7 @@ export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleNavClick = async (itemName: string, href: string) => {
-    await logInfo('Navigation item clicked', {
-      item: itemName,
-      source: 'header'
-    });
-
-    // Add smooth scrolling for anchor links
-    if (href.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    smoothScrollToElement(href);
   };
 
   return (
@@ -38,7 +28,7 @@ export function Header() {
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
           <div className="flex w-full items-center justify-between py-4">
             <div className="flex items-center">
-              <Link href="/" className="flex items-center">
+              <Link href="/" className="flex items-center" onClick={() => handleNavClick('', '/')}>
                 <Image
                   src="/Logo-01.png"
                   alt="PapStore Logo"

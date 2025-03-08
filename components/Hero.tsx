@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { smoothScrollToElement } from '@/lib/scrollUtils';
 
 export function Hero() {
   return (
@@ -22,7 +23,7 @@ export function Hero() {
               className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-xl text-white bg-[#00603A] hover:bg-[#004e2f] transition-all duration-200 shadow-md hover:shadow-lg"
               onClick={(e) => {
                 e.preventDefault();
-                document.querySelector('#inquiry')?.scrollIntoView({ behavior: 'smooth' });
+                smoothScrollToElement('inquiry');
               }}
             >
               Get a Free Quote
@@ -32,7 +33,7 @@ export function Hero() {
               className="inline-flex items-center justify-center px-8 py-4 border-2 border-[#00603A] text-lg font-semibold rounded-xl text-[#00603A] bg-white hover:bg-[#00603A]/5 transition-all duration-200 shadow-md hover:shadow-lg"
               onClick={(e) => {
                 e.preventDefault();
-                document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' });
+                smoothScrollToElement('services');
               }}
             >
               View Our Services
