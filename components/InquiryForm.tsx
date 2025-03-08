@@ -23,7 +23,7 @@ const initialFormData: FormData = {
 
 const contactInfo = {
   email: "enquiries@papstore.com",
-  phone: "07301 503451",
+  phone: "+44 7861 172194",
   address: "44-50 The Broadway, Southall, Middlesex, UB1 1QB",
   hours: {
     weekday: "8:00 AM - 6:00 PM",
