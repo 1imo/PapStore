@@ -13,7 +13,7 @@ const flooringTypes = [
       {
         name: 'Twist Pile',
         description: 'Durable and practical, perfect for high-traffic areas',
-        bestFor: ['Family homes', 'Rental properties', 'Hallways', 'Stairs'],
+        bestFor: ['Family homes', 'Hallways', 'Stairs'],
         features: ['Hides footprints', 'Resilient surface', 'Long-lasting'],
         suitability: 'High traffic areas',
         image: '/twist-pile.jpg'
@@ -241,6 +241,16 @@ export function FlooringGuide() {
                   aria-controls={`panel-${type.id}`}
                   id={`tab-${type.id}`}
                 >
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
+                    <Image
+                      src={type.types[0].image}
+                      alt={type.name}
+                      fill
+                      priority
+                      className="object-cover"
+                      sizes="48px"
+                    />
+                  </div>
                   {type.name}
                 </button>
               ))}
@@ -273,6 +283,7 @@ export function FlooringGuide() {
                           src={subType.image}
                           alt={subType.name}
                           fill
+                          priority
                           className="object-cover"
                           sizes="48px"
                         />
