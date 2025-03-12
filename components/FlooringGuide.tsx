@@ -241,16 +241,6 @@ export function FlooringGuide() {
                   aria-controls={`panel-${type.id}`}
                   id={`tab-${type.id}`}
                 >
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden">
-                    <Image
-                      src={type.types[0].image}
-                      alt={type.name}
-                      fill
-                      priority
-                      className="object-cover"
-                      sizes="48px"
-                    />
-                  </div>
                   {type.name}
                 </button>
               ))}
