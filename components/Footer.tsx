@@ -13,19 +13,19 @@ const structuredData = {
     "description": "Your trusted destination for quality carpets, rugs, and flooring solutions.",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "44-50 The Broadway",
-      "addressLocality": "Southall",
-      "addressRegion": "Middlesex",
-      "postalCode": "UB1 1QB",
-      "addressCountry": "GB"
+      "streetAddress": "",
+      "addressLocality": "",
+      "addressRegion": "",
+      "postalCode": "",
+      "addressCountry": ""
     },
     "areaServed": [
-      "Guildford",
+      "Central London",
       "Woking",
       "Byfleet",
       "Dorking",
       "Addlestone",
-      "Central London"
+      "Guildford"
     ],
     "sameAs": [
       "https://facebook.com/papstore",
@@ -84,10 +84,10 @@ export function Footer() {
                 itemScope
                 itemType="https://schema.org/PostalAddress"
               >
-                <span itemProp="streetAddress">44-50 The Broadway</span>,{' '}
-                <span itemProp="addressLocality">Southall</span>,{' '}
-                <span itemProp="addressRegion">Middlesex</span>,{' '}
-                <span itemProp="postalCode">UB1 1QB</span>
+                <span itemProp="streetAddress"></span>,{' '}
+                <span itemProp="addressLocality"></span>,{' '}
+                <span itemProp="addressRegion"></span>,{' '}
+                <span itemProp="postalCode"></span>
               </p>
             </div>
             <div className="text-left md:text-right">
