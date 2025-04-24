@@ -157,6 +157,18 @@ export function Testimonials() {
             ))}
           </div>
         </div>
+        <div className="mt-12 text-center">
+          <a
+            href="https://g.page/r/CULuyGeLREo_EBM/review"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-xl text-white bg-[#00603A] hover:bg-[#004e2f] transition-colors duration-200 shadow-md hover:shadow-lg"
+            role="button"
+            aria-label="Leave a Google Review"
+          >
+            Leave a Google Review
+          </a>
+        </div>
       </section>
     </>
   );

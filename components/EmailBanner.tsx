@@ -102,7 +102,7 @@ export function EmailBanner() {
                           </svg>
                         </span>
                         <p className="ml-3 font-medium text-white truncate">
-                          <span>10% off your first job!</span>
+                          <span>Enter your email for £100 off your first job!</span>
                         </p>
                       </div>
                       <button
