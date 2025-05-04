@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import ClientLayout from "./client-layout";
+import Script from 'next/script';
 
 // Separate viewport configuration
 export const viewport: Viewport = {
@@ -11,28 +12,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.papstore.co.uk'),
-  title: "PapStore - Professional Carpet & Flooring Solutions in Surrey & London",
+  title: "Papstore Carpets & Flooring",
   description: "Expert carpet and flooring installation services across the UK. Family-owned business with 20+ years experience in hardwood, laminate, vinyl flooring and carpet fitting. Based in Southall, serving London, Surrey, and nationwide.",
   keywords: [
-    // Location-based keywords - London
-    "carpet fitting Southall", "flooring installation West London", "carpet shop London", 
-    "flooring company Ealing", "carpet fitters UB1", "flooring specialists Hounslow",
-    "carpet store Uxbridge", "flooring services Hayes", "carpet installation Greenford",
-    "flooring solutions Harrow", "carpet shop Wembley", "flooring experts Acton",
-    "carpet fitters Chiswick", "flooring company Richmond", "carpet store Kingston",
-    
-    // Location-based keywords - Surrey
-    "carpet fitting Guildford", "flooring installation Woking", "carpet shop Byfleet",
-    "flooring solutions Dorking", "carpet store Addlestone", "flooring experts Surrey",
-    "carpet fitters Weybridge", "flooring company Esher", "carpet shop Leatherhead",
-    "flooring specialists Epsom", "carpet installation Staines", "flooring services Cobham",
-    "carpet store Farnham", "flooring experts Godalming", "carpet fitters Haslemere",
-    
-    // Location-based keywords - Home Counties
-    "carpet fitting Berkshire", "flooring installation Hampshire", "carpet shop Sussex",
-    "flooring solutions Kent", "carpet store Essex", "flooring experts Hertfordshire",
-    "carpet fitters Buckinghamshire", "flooring company Oxfordshire", "carpet shop Middlesex",
-    
     // Service-based keywords
     "commercial flooring installation", "residential carpet fitting",
     "hardwood floor installation", "engineered wood flooring installation",
@@ -219,9 +201,37 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-        <ClientLayout>
-          {children}
-        </ClientLayout>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-K4RQ07KFYT"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            
+            // Initialize with consent denied by default
+            gtag('consent', 'default', {
+              'analytics_storage': 'denied'
+            });
+            
+            // Only configure if consent is given
+            const hasConsented = localStorage.getItem('cookieConsent') === 'true';
+            if (hasConsented) {
+              gtag('consent', 'update', {
+                'analytics_storage': 'granted'
+              });
+            }
+            
+            gtag('config', 'G-K4RQ07KFYT');
+          `}
+        </Script>
+      </head>
+      <ClientLayout>
+        {children}
+      </ClientLayout>
     </html>
   );
 }

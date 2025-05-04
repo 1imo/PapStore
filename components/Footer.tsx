@@ -186,6 +186,17 @@ export function Footer() {
                     WhatsApp
                   </a>
                 </li>
+                 <li>
+                    <a 
+                      href="https://g.page/r/CULuyGeLREo_EBM/review" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-[#00603A] text-sm"
+                      aria-label="Leave a Google Review"
+                    >
+                      Leave a Review
+                    </a>
+                  </li>
               </ul>
             </div>
           </div>

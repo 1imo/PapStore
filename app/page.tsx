@@ -4,24 +4,37 @@ import { HowItWorks } from '@/components/HowItWorks';
 import { AboutUs } from '@/components/AboutUs';
 import { Testimonials } from '@/components/Testimonials';
 import { InquiryForm } from '@/components/InquiryForm';
-import { EmailBanner } from '@/components/EmailBanner';
+import { CookieBanner } from '@/components/CookieBanner';
 import { FlooringGuide } from '@/components/FlooringGuide';
+import { PopularCategories } from '@/components/PopularCategories';
+import { FlooringFinderBanner } from '@/components/FlooringFinderBanner';
+import { HelpCenter } from '@/components/HelpCenter';
+import { PromotionBanner } from '@/components/PromotionBanner';
 
 export default function Home() {
   return (
     <>
-      <EmailBanner />
+      <CookieBanner />
       <Hero />
-      <Services />
       <div className="h-8 md:h-32 bg-white" />
-      <HowItWorks />
+      <PopularCategories />
       <div className="h-8 md:h-32 bg-white" />
-      <Testimonials />
+      <PromotionBanner />
+      {/* <Services />
+      <div className="h-8 md:h-32 bg-white" /> */}
       <div className="h-8 md:h-32 bg-white" />
       <FlooringGuide />
       <div className="h-8 md:h-32 bg-white" />
-      <AboutUs />
+      <HowItWorks />
       <div className="h-8 md:h-32 bg-white" />
+      <FlooringFinderBanner />
+      <div className="h-8 md:h-32 bg-white" />
+      <HelpCenter />
+      <div className="h-8 md:h-32 bg-white" />
+      <Testimonials />
+      <div className="h-8 md:h-32 bg-white" />
+      {/* <AboutUs />
+      <div className="h-8 md:h-32 bg-white" /> */}
       <InquiryForm />
     </>
   );
