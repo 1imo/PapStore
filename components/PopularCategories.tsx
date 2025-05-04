@@ -59,7 +59,7 @@ export function PopularCategories() {
                   src={category.image}
                   alt={category.name}
                   fill
-                  className="object-cover"
+                  className="object-cover rounded-lg"
                 />
               </div>
               <div className="mt-4">

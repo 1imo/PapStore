@@ -27,7 +27,7 @@ export function HelpCenter() {
   };
 
   return (
-    <section className="py-16 bg-[#00603A] relative overflow-hidden">
+    <section className="py-8 sm:py-16 bg-[#00603A] relative overflow-hidden px-4 sm:px-0">
       <div className="w-full relative">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
@@ -39,7 +39,7 @@ export function HelpCenter() {
         </div>
 
         <div className="mt-12 max-w-3xl mx-auto">
-          <div className="bg-[#00603A] rounded-xl p-8 relative">
+          <div className="bg-[#004e2f] rounded-xl p-8 relative shadow-lg">
             <div className="relative">
               <select
                 value={selectedMission}
@@ -72,33 +72,39 @@ export function HelpCenter() {
         </div>
 
         <div className="mt-8 max-w-3xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-2 sm:gap-4">
             <a
               href="/book-a-home-visit"
-              className="flex items-center justify-center px-4 py-3 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+              className="flex flex-col items-center px-2 sm:px-4 py-5 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
               onClick={() => logInfo('Home visit clicked')}
             >
-              <HomeIcon className="h-5 w-5 text-white mr-2" />
-              <span className="text-white">Book a home visit</span>
+              <HomeIcon className="h-5 w-5 text-white" />
+              <span className="text-white text-sm sm:text-base text-center mt-2 leading-tight">
+                Book a home visit
+              </span>
             </a>
             <a
               href="tel:+447861172194"
-              className="flex items-center justify-center px-4 py-3 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+              className="flex flex-col items-center px-2 sm:px-4 py-5 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
               onClick={() => logInfo('Phone call clicked')}
             >
-              <PhoneIcon className="h-5 w-5 text-white mr-2" />
-              <span className="text-white">Call us directly</span>
+              <PhoneIcon className="h-5 w-5 text-white" />
+              <span className="text-white text-sm sm:text-base text-center mt-2 leading-tight">
+                Call us directly today
+              </span>
             </a>
             <a
               href="#"
-              className="flex items-center justify-center px-4 py-3 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+              className="flex flex-col items-center px-2 sm:px-4 py-5 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
               onClick={(e) => {
                 e.preventDefault();
                 logInfo('Chat clicked');
               }}
             >
-              <ChatBubbleLeftRightIcon className="h-5 w-5 text-white mr-2" />
-              <span className="text-white">Chat with our experts</span>
+              <ChatBubbleLeftRightIcon className="h-5 w-5 text-white" />
+              <span className="text-white text-sm sm:text-base text-center mt-2 leading-tight">
+                Chat with our experts
+              </span>
             </a>
           </div>
         </div>

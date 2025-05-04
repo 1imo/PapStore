@@ -211,6 +211,20 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
+            
+            // Initialize with consent denied by default
+            gtag('consent', 'default', {
+              'analytics_storage': 'denied'
+            });
+            
+            // Only configure if consent is given
+            const hasConsented = localStorage.getItem('cookieConsent') === 'true';
+            if (hasConsented) {
+              gtag('consent', 'update', {
+                'analytics_storage': 'granted'
+              });
+            }
+            
             gtag('config', 'G-K4RQ07KFYT');
           `}
         </Script>

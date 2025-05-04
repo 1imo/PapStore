@@ -176,44 +176,44 @@ export function Header() {
       />
       
       {/* Top CTA Bar - Awareness Stage */}
-      <div className="bg-[#00603A] text-white py-2 fixed top-0 left-0 right-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="flex space-x-6">
+      <div className="bg-[#00603A] text-white h-10 sm:h-8 flex items-center fixed top-0 left-0 right-0 z-50">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-8 w-full">
+          <div className="flex items-center justify-between">
+            <div className="flex flex-row items-center overflow-x-auto flex-nowrap space-x-6 scrollbar-hide">
               <Link 
                 href="/finder"
-                className="text-sm hover:text-gray-200 transition-colors flex items-center group"
+                className="shrink-0 min-w-[120px] text-sm hover:text-gray-200 transition-colors flex items-center gap-2 group whitespace-nowrap"
                 aria-label="Take our flooring quiz to find your perfect match"
               >
-                <svg className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
                 <span className="group-hover:underline">Take Our Flooring Quiz</span>
               </Link>
               <Link 
                 href="#samples"
-                className="text-sm hover:text-gray-200 transition-colors flex items-center group"
+                className="shrink-0 min-w-[120px] text-sm hover:text-gray-200 transition-colors flex items-center gap-2 group whitespace-nowrap"
                 onClick={(e) => {
                   e.preventDefault();
                   smoothScrollToElement('samples');
                 }}
                 aria-label="Request free flooring samples"
               >
-                <svg className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
                 <span className="group-hover:underline">Get Free Samples</span>
               </Link>
               <Link 
                 href="#inquiry"
-                className="text-sm hover:text-gray-200 transition-colors flex items-center group"
+                className="shrink-0 min-w-[120px] text-sm hover:text-gray-200 transition-colors flex items-center gap-2 group whitespace-nowrap"
                 onClick={(e) => {
                   e.preventDefault();
                   smoothScrollToElement('inquiry');
                 }}
                 aria-label="Get a free flooring quote"
               >
-                <svg className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span className="group-hover:underline">Get a Free Quote</span>
@@ -222,10 +222,10 @@ export function Header() {
             <div className="hidden sm:flex items-center space-x-4">
               <a 
                 href="tel:+447861172194"
-                className="text-sm hover:text-gray-200 transition-colors flex items-center group"
+                className="text-sm hover:text-gray-200 transition-colors flex items-center gap-2 group"
                 aria-label="Call us at +44 7861 172194"
               >
-                <svg className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 <span className="group-hover:underline">+44 7861 172194</span>
@@ -237,9 +237,12 @@ export function Header() {
 
       {/* Main Header - Consideration Stage */}
       <header 
-        className={`bg-white border-b border-gray-100 fixed top-[36px] left-0 right-0 z-40 transition-all duration-200 ${
-          isScrolled ? 'shadow-md' : ''
-        }`} 
+        className={`
+          bg-white border-b border-gray-100 fixed 
+          left-0 right-0 z-40 transition-all duration-200
+          ${isScrolled ? 'shadow-md' : ''}
+          top-10 sm:top-8
+        `}
         role="banner"
       >
         <nav 
@@ -318,56 +321,61 @@ export function Header() {
         </nav>
 
         {/* Flooring Types Bar - Decision Stage */}
-        <div 
+        <div
           className="bg-gray-50 border-t border-gray-100 relative"
           role="navigation"
           aria-label="Flooring types"
           onMouseLeave={handleMouseLeave}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-6 gap-0 py-3">
+          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+            {/* Use flex on mobile, grid on sm+ */}
+            <div className="flex overflow-x-auto sm:grid sm:grid-cols-6 gap-0 py-2 sm:py-3 scrollbar-hide">
+              {/* Left spacer for mobile */}
+              <div className="w-2 sm:hidden" aria-hidden="true" />
               {flooringTypes.map((type, index) => (
                 <div
                   key={type.name}
-                  className="relative group"
+                  className="relative group flex-shrink-0 px-4 sm:px-0"
                   onMouseEnter={() => handleMouseEnter(type.name)}
                 >
                   {index === 0 && (
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300" />
+                    <div className="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300" />
                   )}
                   <Link
                     href={type.href}
-                    className="text-sm font-medium text-gray-600 hover:text-[#00603A] transition-colors flex items-center justify-center"
+                    className="block text-sm font-medium text-gray-600 hover:text-[#00603A] transition-colors flex items-center justify-center py-2 whitespace-nowrap"
                     aria-label={type.ariaLabel}
                   >
                     {type.name}
                   </Link>
                   {index < flooringTypes.length - 1 && (
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300" />
+                    <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300" />
                   )}
                 </div>
               ))}
               {/* Sale Dropdown */}
               <div
-                className="relative group"
+                className="relative group flex-shrink-0 px-4 sm:px-0"
                 onMouseEnter={() => handleMouseEnter('Sale')}
               >
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300" />
+                <div className="hidden sm:block absolute left-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300" />
                 <Link
                   href={saleItems.href}
-                  className="text-sm font-medium text-red-600 hover:text-red-700 transition-colors flex items-center justify-center"
+                  className="block text-sm font-medium text-red-600 hover:text-red-700 transition-colors flex items-center justify-center py-2 whitespace-nowrap"
                   aria-label={saleItems.ariaLabel}
                 >
                   {saleItems.name}
                 </Link>
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300" />
+                <div className="hidden sm:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-4 bg-gray-300" />
               </div>
+              {/* Right spacer for mobile */}
+              <div className="w-2 sm:hidden" aria-hidden="true" />
             </div>
           </div>
 
-          {/* Dropdown Menus Container */}
-          <div 
-            className={`absolute left-0 right-0 top-full w-full bg-white shadow-lg transition-opacity duration-200 ${
+          {/* Dropdown Menus Container - Only show on sm+ */}
+          <div
+            className={`hidden sm:block absolute left-0 right-0 top-full w-full bg-white shadow-lg transition-opacity duration-200 ${
               isDropdownOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
             }`}
             role="menu"
@@ -381,7 +389,7 @@ export function Header() {
                 className={`w-full ${activeFlooringType === type.name ? 'block' : 'hidden'}`}
                 role="menu"
               >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-4 gap-8">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-4 gap-8">
                   <div className="px-0">
                     <h3 className="font-semibold text-gray-900 mb-4">Colours</h3>
                     <div className="grid grid-cols-3 gap-4">
@@ -439,7 +447,7 @@ export function Header() {
               className={`w-full ${activeFlooringType === 'Sale' ? 'block' : 'hidden'}`}
               role="menu"
             >
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-4 gap-8">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 sm:grid-cols-4 gap-8">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-4">Categories</h3>
                   <ul className="space-y-2">
@@ -493,143 +501,105 @@ export function Header() {
       </header>
 
       {/* Spacer for main header */}
-      <div className="h-[120px]" aria-hidden="true" />
+      <div className="h-[90px] sm:h-[104px]" aria-hidden="true" />
 
       {/* Mobile menu - Optimized for conversion */}
-      {mobileMenuOpen && (
-        <div 
-          className="fixed inset-0 z-50 md:hidden"
-          id="mobile-menu"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Mobile navigation menu"
-        >
-          {/* Dark overlay */}
-          <div 
-            className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm"
-            aria-hidden="true"
-            onClick={() => setMobileMenuOpen(false)}
-          />
-          {/* Menu panel */}
-          <div 
-            className="fixed inset-y-0 right-0 w-screen bg-white shadow-xl overflow-y-auto"
-            role="menu"
-          >
-            <div className="flex w-full items-center justify-between py-4 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
-              <div className="flex items-center">
-                <Link 
-                  href="/" 
-                  className="flex items-center"
-                  onClick={() => {
-                    handleNavClick('Home', '/');
-                    setMobileMenuOpen(false);
-                  }}
-                  aria-label="PapStore - Return to homepage"
-                >
-                  <Image
-                    src="/Logo-01.png"
-                    alt="PapStore Carpets & Flooring"
-                    width={150}
-                    height={40}
-                    priority
-                  />
-                </Link>
-              </div>
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-[#00603A] hover:bg-gray-100"
+          {mobileMenuOpen && (
+            <div 
+              className="fixed inset-0 z-40 md:hidden"
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation menu"
+            >
+              {/* Dark overlay */}
+              <div 
+                className="fixed inset-0 bg-gray-900/50 backdrop-blur-sm"
+                aria-hidden="true"
                 onClick={() => setMobileMenuOpen(false)}
-                aria-label="Close menu"
+              />
+              {/* Menu panel */}
+              <div 
+                className="fixed inset-y-0 right-0 w-screen bg-white shadow-xl overflow-y-auto mt-10 sm:mt-8"
+                role="menu"
               >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-
-            {/* Quick CTAs */}
-            <div className="px-4 py-3 bg-gray-50 border-b border-gray-100">
-              <div className="flex flex-col space-y-2">
-                <a
-                  href="tel:+447861172194"
-                  className="flex items-center justify-center px-4 py-2 bg-[#00603A] text-white rounded-lg hover:bg-[#004e2f] transition-colors"
-                  aria-label="Call us at +44 7861 172194"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  Call Now
-                </a>
-                <Link
-                  href="/finder"
-                  className="flex items-center justify-center px-4 py-2 bg-white border-2 border-[#00603A] text-[#00603A] rounded-lg hover:bg-gray-50 transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                  aria-label="Take our flooring quiz"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                  Take Quiz
-                </Link>
-              </div>
-            </div>
-
-            <div className="px-4 sm:px-6 lg:px-8 py-4 space-y-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                  onClick={() => {
-                    handleNavClick(item.name, item.href);
-                    setMobileMenuOpen(false);
-                  }}
-                  aria-label={item.ariaLabel}
-                  role="menuitem"
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <div className="pt-4 border-t border-gray-100">
-                <h3 className="px-3 text-sm font-semibold text-gray-500 uppercase tracking-wider">
-                  Flooring Types
-                </h3>
-                <div className="mt-2 space-y-1">
-                  {flooringTypes.map((type) => (
-                    <Link
-                      key={type.name}
-                      href={type.href}
-                      className="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                      onClick={() => setMobileMenuOpen(false)}
-                      role="menuitem"
-                      aria-label={type.ariaLabel}
+                <div className="flex w-full items-center justify-between py-4 px-4 sm:px-6 lg:px-8 border-b border-gray-100">
+                  <div className="flex items-center">
+                    <Link 
+                      href="/" 
+                      className="flex items-center"
+                      onClick={() => {
+                        handleNavClick('Home', '/');
+                        setMobileMenuOpen(false);
+                      }}
+                      aria-label="PapStore - Return to homepage"
                     >
-                      <div className="flex items-center justify-between">
-                        <span>{type.name}</span>
-                        <span className="text-sm text-gray-500">{type.description}</span>
-                      </div>
+                      <Image
+                        src="/Logo-01.png"
+                        alt="PapStore Carpets & Flooring"
+                        width={150}
+                        height={40}
+                        priority
+                      />
+                    </Link>
+                  </div>
+                  <button
+                    type="button"
+                    className="inline-flex items-center justify-center rounded-md p-2 text-gray-600 hover:text-[#00603A] hover:bg-gray-100"
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Close menu"
+                  >
+                    <span className="sr-only">Close menu</span>
+                    <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                  </button>
+                </div>
+
+                <div className="px-4 sm:px-6 lg:px-8 py-4 space-y-2">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="block rounded-lg px-3 py-2 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      onClick={() => {
+                        handleNavClick(item.name, item.href);
+                        setMobileMenuOpen(false);
+                      }}
+                      aria-label={item.ariaLabel}
+                      role="menuitem"
+                    >
+                      {item.name}
                     </Link>
                   ))}
                 </div>
-              </div>
-              <div className="pt-4 border-t border-gray-100">
-                <a
-                  href="#inquiry"
-                  className="block w-full text-center rounded-lg px-3 py-2 text-base font-medium text-white bg-[#00603A] hover:bg-[#004e2f]"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    smoothScrollToElement('inquiry');
-                    setMobileMenuOpen(false);
-                  }}
-                  role="menuitem"
-                  aria-label="Request a free quote"
-                >
-                  Get Quote
-                </a>
+
+                <div className="pt-4 border-t border-gray-100 px-4 sm:px-6 lg:px-8">
+                  <div className="flex flex-col space-y-2">
+                    <Link
+                      href="/finder"
+                      className="flex items-center justify-center px-4 py-2 bg-[#00603A] text-white rounded-lg hover:bg-[#004e2f] transition-colors"
+                      onClick={() => setMobileMenuOpen(false)}
+                      aria-label="Take our flooring quiz"
+                    >
+                      <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                      </svg>
+                      Take Quiz
+                    </Link>
+                    <a
+                      href="tel:+447861172194"
+                      className="flex items-center justify-center px-4 py-2 bg-white border-2 border-[#00603A] text-[#00603A] rounded-lg hover:bg-gray-50 transition-colors"
+                      aria-label="Call us at +44 7861 172194"
+                    >
+                      <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                      </svg>
+                      Call Now
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
     </>
   );
 } 

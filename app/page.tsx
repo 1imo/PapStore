@@ -4,18 +4,22 @@ import { HowItWorks } from '@/components/HowItWorks';
 import { AboutUs } from '@/components/AboutUs';
 import { Testimonials } from '@/components/Testimonials';
 import { InquiryForm } from '@/components/InquiryForm';
-import { EmailBanner } from '@/components/EmailBanner';
+import { CookieBanner } from '@/components/CookieBanner';
 import { FlooringGuide } from '@/components/FlooringGuide';
 import { PopularCategories } from '@/components/PopularCategories';
 import { FlooringFinderBanner } from '@/components/FlooringFinderBanner';
 import { HelpCenter } from '@/components/HelpCenter';
+import { PromotionBanner } from '@/components/PromotionBanner';
 
 export default function Home() {
   return (
     <>
-      <EmailBanner />
+      <CookieBanner />
       <Hero />
+      <div className="h-8 md:h-32 bg-white" />
       <PopularCategories />
+      <div className="h-8 md:h-32 bg-white" />
+      <PromotionBanner />
       {/* <Services />
       <div className="h-8 md:h-32 bg-white" /> */}
       <div className="h-8 md:h-32 bg-white" />
